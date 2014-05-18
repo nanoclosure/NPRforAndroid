@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="Download Setting"
+        android:summary="Network connectivity required to download newses."
+        android:key="networkPref"
+        android:defaultValue="Any"
+        android:entries="@array/networkListArray"
+        android:entryValues="@array/networkListValues"
+        />
+    <CheckBoxPreference
+        android:key="AUTO_UPDATE"
+        android:title="Auto Update"
+        android:summary="Select to turn on automatic updating"
+        android:defaultValue="false"
+        />
+    <ListPreference
+        android:dependency="AUTO_UPDATE"
+        android:title="Update Frequency"
+        android:summary="Interval to check for new content."
+        android:key="updatePref"
+        android:defaultValue="60"
+        android:entries="@array/update_freq_options"
+        android:entryValues="@array/update_freq_values"
+        />
+
+</PreferenceScreen>

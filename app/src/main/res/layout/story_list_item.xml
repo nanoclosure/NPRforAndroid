@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Story Topic"
+        android:id="@+id/story_topic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="4dp"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/story_imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/story_topic"
+        android:paddingTop="4dp"
+        android:paddingLeft="4dp"
+        android:paddingBottom="4dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Story Title"
+        android:id="@+id/story_title"
+        android:layout_alignTop="@+id/story_imageView"
+        android:layout_toRightOf="@+id/story_imageView"
+        android:layout_alignParentEnd="true"
+        android:paddingLeft="4dp"
+        android:paddingRight="8dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/story_title"
+        android:layout_toRightOf="@+id/story_imageView"
+        android:paddingLeft="4dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author"
+            android:id="@+id/story_byline" />
+        <!-- <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | "
+            android:id="@+id/spacetext" />
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pub Date"
+            android:id="@+id/story_pubDate" />
+    </LinearLayout>
+</RelativeLayout>

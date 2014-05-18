@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="navdrawer_list">
+        <item>Top News</item>
+        <item>Hourly Podcast</item>
+        <item>News Topics</item>
+        <item>Radio Programs</item>
+        <item>Settings</item>
+        <item>About NPR</item>
+
+    </string-array>
+
+    <string-array name="networkListArray">
+        <item>Only when on Wi-Fi</item>
+        <item>On any network</item>
+    </string-array>
+    <string-array name="networkListValues">
+        <item>Wi-Fi</item>
+        <item>Any</item>
+    </string-array>
+
+    <string-array name="news_topic">
+        <item>U.S.</item>
+        <item>World</item>
+        <item>Politics</item>
+        <item>Business</item>
+        <item>Music News</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Technology</item>
+        <item>Arts and Life</item>
+        <item>Books</item>
+        <item>Analysis</item>
+        <item>Asia</item>
+        <item>Business Story of the Day</item>
+        <item>Economy</item>
+        <item>Energy</item>
+    </string-array>
+
+    <string-array name="news_topic_code">
+        <item>1003</item>
+        <item>10004</item>
+        <item>1014</item>
+        <item>1006</item>
+        <item>1106</item>
+        <item>1007</item>
+        <item>1128</item>
+        <item>1149</item>
+        <item>1008</item>
+        <item>1032</item>
+        <item>1059</item>
+        <item>1125</item>
+        <item>1095</item>
+        <item>1017</item>
+        <item>1131</item>
+    </string-array>
+
+    <string-array name="update_freq_options">
+        <item>Every 30 minutes</item>
+        <item>Every hour</item>
+        <item>Every four hours</item>
+        <item>Every 24 Hours</item>
+    </string-array>
+
+    <string-array name="update_freq_values">
+        <item>30</item>
+        <item>60</item>
+        <item>240</item>
+        <item>1440</item>
+    </string-array>
+
+
+</resources>

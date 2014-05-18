@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NPR</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_story">Story</string>
+
+
+    <string name="podcast_image_description">NPR Podcast</string>
+    <string name="acd_play_button">start Podcast Player</string>
+    <string name="acd_pause_button">Pause Podcast Player</string>
+    <string name="acd_stop_button">Stop Podcast Player</string>
+    <string name="acd_forward_button">Forward Podcast Player</string>
+    <string name="acd_reverse_button">Reverse Podcast Player</string>
+    <string name="acd_rev30_button">Reverse 30s Podcast Player</string>
+    <string name="podcast_description">Hourly News Summary Podcast</string>
+
+
+    <string name="about_npr_msg">NPR is an award-winning, multimedia news organization and an influential force in American life. In collaboration
+    with more than 880 independent public radio stations nationwide, NPR strives
+    to create a more informed public: one challenged and invigorated by a deeper
+    understanding and appreciation of events, ideas and cultures.  Since its launch in 1970, NPR has become
+    a leader in representation and technology development in the public media
+    community, assuring that the unique mission of nonprofit public media is
+    preserved and grows.</string>
+    <string name="open_source_msg">This app includes the following open source libraries.</string>
+
+</resources>
