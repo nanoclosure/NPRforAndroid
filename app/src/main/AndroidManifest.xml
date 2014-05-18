@@ -21,18 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="edu.nanoracket.nprforandroid.ui.activity.StoryActivity"
-            android:label="@string/title_activity_story" >
-        </activity>
-        <activity
-            android:name=".ui.activity.PodcastListActivity"
-            android:label="Programs" >
-        </activity>
-        <activity
-            android:name=".ui.activity.PodcastActivity"
-            android:label="Podcast">
-        </activity>
     </application>
 
 </manifest>
