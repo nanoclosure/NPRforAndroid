@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import edu.nanoracket.nprforandroid.program.Program;
+import edu.nanoracket.nprforandroid.program.ProgramListAdapter;
 import edu.nanoracket.nprforandroid.program.ProgramListFetcher;
 import edu.nanoracket.nprforandroid.ui.activity.PodcastListActivity;
 
@@ -20,12 +21,14 @@ public class ProgramListFragment extends ListFragment {
 
     private static final String TAG = "NPRProgramsFragment";
     public static ArrayList<Program> mPrograms;
+    public ProgramListAdapter listAdapter;
+    public ListView listView;
 
     public void onCreate(Bundle SavedInstanceState){
         super.onCreate(SavedInstanceState);
         setHasOptionsMenu(true);
         new FetchProgramsTask().execute();
-
+        //setupAdapter();
     }
 
     private class FetchProgramsTask extends AsyncTask<Void, Void, ArrayList<Program>> {
@@ -48,10 +51,14 @@ public class ProgramListFragment extends ListFragment {
 
     public void setupAdapter(){
         if(getActivity() == null  || getListView() == null) return;
+
+        listView = getListView();
+        listAdapter = new ProgramListAdapter(getActivity(),mPrograms);
         if(mPrograms != null){
-            setListAdapter(new ArrayAdapter<Program>(getActivity(),
-                    android.R.layout.simple_list_item_1, mPrograms));
+            //listView.setAdapter(listAdapter);
+            setListAdapter(listAdapter);
         } else {
+            //listView.setAdapter(null);
             setListAdapter(null);
         }
     }

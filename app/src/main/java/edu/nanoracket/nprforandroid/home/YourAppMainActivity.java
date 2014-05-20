@@ -1,5 +1,6 @@
 package edu.nanoracket.nprforandroid.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import edu.nanoracket.nprforandroid.R;
@@ -28,11 +29,12 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
         super.onCreate(savedInstanceState);
         storyLab = StoryLab.getInstance(this);
             if ( savedInstanceState == null ) {
-                if(getIntent() != null){
+                newsTopicId = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
+                if(newsTopicId != null){
                     storyLab.clearStories();
 
-                    newsTopicId = getIntent()
-                            .getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
+                    /*newsTopicId = getIntent()
+                            .getStringExtra(NewsListFragment.NEWS_TOPIC_ID);*/
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content_frame,
                                     NewsListFragment.newInstance(newsTopicId))

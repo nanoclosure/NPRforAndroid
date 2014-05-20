@@ -25,7 +25,8 @@ public class PodcastListFragment extends ListFragment {
 	public static final String PODCAST_SRC = 
 			"edu.nanoracket.npr.nprpodcastlistfragment.src";
 	
-	public ArrayList<Podcast> mNPRPodcastList;
+	public ArrayList<Podcast> podcasts;
+    public ListView listView;
 	
 	public static PodcastListFragment newInstance(String podcastSrc){
 		Bundle args = new Bundle();
@@ -40,7 +41,7 @@ public class PodcastListFragment extends ListFragment {
 	public void onCreate(Bundle SavedInstanceState){
 		super.onCreate(SavedInstanceState);
 		setHasOptionsMenu(true);
-		mNPRPodcastList = PodcastList.get().getNPRPodcastsList();
+		podcasts = PodcastList.get().getNPRPodcastsList();
 		//mNewsesList = NPRNewsList.get().getNPRNewsList();
 		new FetchPodcastsTask().execute();
 	}
@@ -48,7 +49,7 @@ public class PodcastListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
         
-		Podcast podcast = (Podcast) mNPRPodcastList.get(position);
+		Podcast podcast = (Podcast) podcasts.get(position);
         Log.i(TAG,"Podcasts selected: " + podcast);
         Intent i = new Intent(getActivity(), PodcastActivity.class);
         i.putExtra(PodcastFragment.PODCAST_URL,podcast.getUrl());
@@ -69,17 +70,18 @@ public class PodcastListFragment extends ListFragment {
 	
 		@Override
 		protected void onPostExecute(ArrayList<Podcast> podcasts){
-			mNPRPodcastList = podcasts;
-			Log.i(TAG,"News ArrayList Received: " + mNPRPodcastList);
+			PodcastListFragment.this.podcasts = podcasts;
+			Log.i(TAG,"News ArrayList Received: " + PodcastListFragment.this.podcasts);
 			setupAdapter();
 		} 
 	}
 	
 	public void setupAdapter(){
 		if(getActivity() == null  || getListView() == null) return;
-		if(mNPRPodcastList != null){
+        listView = getListView();
+		if(podcasts != null){
 			setListAdapter(new ArrayAdapter<Podcast>(getActivity(),
-                    android.R.layout.simple_list_item_1,mNPRPodcastList));
+                    android.R.layout.simple_list_item_1, podcasts));
 		} else {
 			setListAdapter(null);
 		}
