@@ -47,9 +47,9 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
         titleTextView.setText(story.getTitle());
 
         if(story.getByline()!= null){
-            authorTextView.setText(story.getByline().getName());
+            authorTextView.setText("by " + story.getByline().getName());
         }else {
-            authorTextView.setText("NPR Staff");
+            authorTextView.setText("by NPR Staff");
         }
 
         pubDateTextView.setText(new StringToDateUtils().getPubDate(story.getPubDate()));

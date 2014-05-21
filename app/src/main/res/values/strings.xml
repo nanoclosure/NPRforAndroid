@@ -9,6 +9,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_story">Story</string>
 
+    <string name="news_save">Save</string>
+    <string name="news_share">Share</string>
 
     <string name="podcast_image_description">NPR Podcast</string>
     <string name="acd_play_button">start Podcast Player</string>
@@ -19,6 +21,8 @@
     <string name="acd_rev30_button">Reverse 30s Podcast Player</string>
     <string name="podcast_description">Hourly News Summary Podcast</string>
 
+    <string name="network_alert_title">No Network Connection</string>
+    <string name="network_alert_message">The app needs access to your network. Please turn on your network services.</string>
 
     <string name="about_npr_msg">NPR is an award-winning, multimedia news organization and an influential force in American life. In collaboration
     with more than 880 independent public radio stations nationwide, NPR strives
@@ -27,6 +31,7 @@
     a leader in representation and technology development in the public media
     community, assuring that the unique mission of nonprofit public media is
     preserved and grows.</string>
+
     <string name="open_source_msg">This app includes the following open source libraries.</string>
 
 </resources>

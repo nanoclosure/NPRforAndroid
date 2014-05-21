@@ -22,7 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.PodcastListActivity"/>
-        <activity android:name=".ui.activity.StoryActivity"/>
+        <activity android:name=".ui.activity.StoryActivity"
+            android:parentActivityName=".home.YourAppMainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                 android:value=".home.YourAppMainActivity" />
+        </activity>
+
         <activity android:name=".ui.activity.PodcastActivity"/>
 
     </application>

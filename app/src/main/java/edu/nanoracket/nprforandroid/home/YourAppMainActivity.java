@@ -1,11 +1,17 @@
 package edu.nanoracket.nprforandroid.home;
 
+import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 
 import edu.nanoracket.nprforandroid.R;
 import edu.nanoracket.nprforandroid.news.StoryLab;
 import edu.nanoracket.nprforandroid.ui.fragment.AboutFragment;
+import edu.nanoracket.nprforandroid.ui.fragment.NetworkDialogFragment;
 import edu.nanoracket.nprforandroid.ui.fragment.NewsTopicsFragment;
 import edu.nanoracket.nprforandroid.ui.fragment.NewscastFragment;
 import edu.nanoracket.nprforandroid.ui.fragment.PrefsFragment;
@@ -27,6 +33,10 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!isNetworkConnected()){
+            showNetworkAlert();
+        }
         storyLab = StoryLab.getInstance(this);
             if ( savedInstanceState == null ) {
                 newsTopicId = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
@@ -47,6 +57,25 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
                 }
 
         }
+    }
+
+    public boolean isNetworkConnected(){
+        ConnectivityManager connMgr = (ConnectivityManager)this
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if(networkInfo != null && networkInfo.isConnected()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void showNetworkAlert(){
+        DialogFragment networkAlertFragment =
+                NetworkDialogFragment.newInstance(R.string.network_alert_title,
+                        R.string.network_alert_message, Settings.ACTION_SETTINGS);
+        networkAlertFragment.show(getFragmentManager(),"dialog");
+
     }
 
     @Override
