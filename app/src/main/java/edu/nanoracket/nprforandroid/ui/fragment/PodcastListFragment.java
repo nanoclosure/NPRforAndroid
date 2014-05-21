@@ -15,22 +15,26 @@ import java.util.ArrayList;
 
 import edu.nanoracket.nprforandroid.podcast.Podcast;
 import edu.nanoracket.nprforandroid.podcast.PodcastList;
+import edu.nanoracket.nprforandroid.podcast.PodcastListAdapter;
 import edu.nanoracket.nprforandroid.podcast.PodcastListFetcher;
 import edu.nanoracket.nprforandroid.program.PodcastFragment;
 import edu.nanoracket.nprforandroid.ui.activity.PodcastActivity;
 
 
 public class PodcastListFragment extends ListFragment {
-	private static final String TAG = "NPRPodcastListFragment";
+	private static final String TAG = "PodcastListFragment";
 	public static final String PODCAST_SRC = 
 			"edu.nanoracket.npr.nprpodcastlistfragment.src";
-	
-	public ArrayList<Podcast> podcasts;
+    public static final String PODCAST_IMAGE = "imagePostion" ;
+
+    public ArrayList<Podcast> podcasts;
     public ListView listView;
+    public PodcastListAdapter listAdapter;
 	
-	public static PodcastListFragment newInstance(String podcastSrc){
+	public static PodcastListFragment newInstance(String podcastSrc, int imagePostion){
 		Bundle args = new Bundle();
 		args.putString(PODCAST_SRC, podcastSrc);
+        args.putInt(PODCAST_IMAGE, imagePostion);
 		
 		PodcastListFragment fragment = new PodcastListFragment();
 		fragment.setArguments(args);
@@ -71,17 +75,17 @@ public class PodcastListFragment extends ListFragment {
 		@Override
 		protected void onPostExecute(ArrayList<Podcast> podcasts){
 			PodcastListFragment.this.podcasts = podcasts;
-			Log.i(TAG,"News ArrayList Received: " + PodcastListFragment.this.podcasts);
+			Log.i(TAG,"Podcast ArrayList Received: " + PodcastListFragment.this.podcasts);
 			setupAdapter();
 		} 
 	}
 	
 	public void setupAdapter(){
 		if(getActivity() == null  || getListView() == null) return;
-        listView = getListView();
+        listAdapter = new PodcastListAdapter(getActivity(), podcasts,
+                                             getArguments().getInt(PODCAST_IMAGE));
 		if(podcasts != null){
-			setListAdapter(new ArrayAdapter<Podcast>(getActivity(),
-                    android.R.layout.simple_list_item_1, podcasts));
+			setListAdapter(listAdapter);
 		} else {
 			setListAdapter(null);
 		}

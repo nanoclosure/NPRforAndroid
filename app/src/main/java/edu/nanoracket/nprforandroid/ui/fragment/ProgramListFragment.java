@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import edu.nanoracket.nprforandroid.R;
 import edu.nanoracket.nprforandroid.program.Program;
 import edu.nanoracket.nprforandroid.program.ProgramListAdapter;
 import edu.nanoracket.nprforandroid.program.ProgramListFetcher;
@@ -23,6 +23,29 @@ public class ProgramListFragment extends ListFragment {
     public static ArrayList<Program> mPrograms;
     public ProgramListAdapter listAdapter;
     public ListView listView;
+
+    public static final int[] imagePostions = new int[] {
+            R.drawable.all_things_considered,
+            R.drawable.cartalk,
+            R.drawable.tedradiohour,
+            R.drawable.planetmoney,
+            R.drawable.snapjudgment,
+            R.drawable.bullseye,
+            R.drawable.onpoint,
+            R.drawable.latinousa,
+            R.drawable.radiolab,
+            R.drawable.popculture,
+            R.drawable.onthemedia,
+            R.drawable.dianerehm,
+            R.drawable.intelligence,
+            R.drawable.stateofreunion,
+            R.drawable.yourhealth,
+            R.drawable.thistleshamrock,
+            R.drawable.worldcafe,
+            R.drawable.fromthetop,
+            R.drawable.onlyagame
+    };
+
 
     public void onCreate(Bundle SavedInstanceState){
         super.onCreate(SavedInstanceState);
@@ -53,7 +76,7 @@ public class ProgramListFragment extends ListFragment {
         if(getActivity() == null  || getListView() == null) return;
 
         listView = getListView();
-        listAdapter = new ProgramListAdapter(getActivity(),mPrograms);
+        listAdapter = new ProgramListAdapter(getActivity(),mPrograms, imagePostions);
         if(mPrograms != null){
             //listView.setAdapter(listAdapter);
             setListAdapter(listAdapter);
@@ -69,7 +92,8 @@ public class ProgramListFragment extends ListFragment {
  		 Program program = (Program)mPrograms.get(position);
          Log.i(TAG,"News selected: " + program);
          Intent i = new Intent(getActivity(), PodcastListActivity.class);
-         i.putExtra(PodcastListFragment.PODCAST_SRC,program.getSource());
+         i.putExtra(PodcastListFragment.PODCAST_SRC, program.getSource());
+         i.putExtra(PodcastListFragment.PODCAST_IMAGE, imagePostions[position]);
          startActivity(i);
       }
 }

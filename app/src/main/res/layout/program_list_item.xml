@@ -5,8 +5,8 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/programImageView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
