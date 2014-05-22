@@ -17,6 +17,7 @@ public abstract class SingleFragmentActivity extends ActionBarActivity {
 public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
 

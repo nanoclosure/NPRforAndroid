@@ -20,10 +20,12 @@ public class PodcastListActivity extends SingleFragmentActivity {
 		 String mProgramSrc = getIntent()
 		            .getStringExtra(PodcastListFragment.PODCAST_SRC);
 
+        String programName = getIntent().getStringExtra(PodcastListFragment.PODCAST_PROGRAM);
+
          int imagePostion = getIntent()
                     .getIntExtra(PodcastListFragment.PODCAST_IMAGE, -1);
 
-		 return PodcastListFragment.newInstance(mProgramSrc, imagePostion);
+		 return PodcastListFragment.newInstance(mProgramSrc, programName, imagePostion);
 	}
 
 }

@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +26,12 @@ public class PodcastFragment extends Fragment implements
 		OnSeekBarChangeListener {
 	private static final String TAG = "ProPodcastFragment";
 	public static final String PODCAST_URL= "podcast.url";
+    public static final String PODCAST_PROGRAM = "program";
+
+    private String programName;
 	
 	private ImageView mPodcastImageView;
-	private TextView mTitleTextView,mDurationTextView,mCurrenTextView;
+	private TextView mTitleTextView,mDurationTextView,mCurrenTextView, mDescriptionTextView;
 	static Podcast mPodcast;
 	private ImageButton mPlayPauseButton,mForwardButton,mReverseButton,mReverse30Button;
 	private SeekBar mProgressBar;
@@ -37,10 +42,10 @@ public class PodcastFragment extends Fragment implements
 	
 	private Handler mHandler = new Handler();
 	
-	public static PodcastFragment newInstance(String url) {
+	public static PodcastFragment newInstance(String url, String progName) {
 		Bundle args = new Bundle();
 		args.putString(PODCAST_URL, url);
-		
+		args.putString(PODCAST_PROGRAM, progName);
 		PodcastFragment fragment = new PodcastFragment();
 		fragment.setArguments(args);
 		
@@ -52,6 +57,11 @@ public class PodcastFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+
+        programName = getArguments().getString(PODCAST_PROGRAM);
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(programName);
+
         String url = getArguments().getString(PODCAST_URL);
         mPodcast = PodcastList.get().getNPRPodcast(url);
         mMediaPlayer = new MediaPlayer();        
@@ -71,6 +81,9 @@ public class PodcastFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_podcast, parent, false);
         
         mPodcastImageView = (ImageView)v.findViewById(R.id.podcast_image);
+
+        mDescriptionTextView = (TextView)v.findViewById(R.id.podcast_description);
+        mDescriptionTextView.setText(getArguments().getString(PODCAST_PROGRAM));
         
         mTitleTextView= (TextView)v.findViewById(R.id.podcast_title);
         mDurationTextView = (TextView)v.findViewById(R.id.songTotalDurationLabel);

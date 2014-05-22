@@ -18,10 +18,12 @@
         android:layout_height="wrap_content"
         android:text="Program Title"
         android:id="@+id/programTextView"
-        android:layout_toRightOf="@+id/programImageView"
         android:layout_gravity="center_vertical|left"
-        android:gravity="center_vertical|left"
-        android:textSize="20sp"
+        android:gravity="center_vertical|center_horizontal|left"
+        android:textSize="16sp"
         android:paddingLeft="8dp"
-        android:paddingRight="8dp"/>
+        android:paddingRight="8dp"
+        android:autoText="false"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/programImageView" />
 </RelativeLayout>

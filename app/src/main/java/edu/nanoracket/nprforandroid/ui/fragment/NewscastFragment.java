@@ -65,7 +65,7 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_podcast, parent, false);
+        View view = inflater.inflate(R.layout.fragment_newscast, parent, false);
 
         mNewscastImageView = (ImageView)view.findViewById(R.id.podcast_image);
 

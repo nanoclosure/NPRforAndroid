@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import edu.nanoracket.nprforandroid.R;
+import edu.nanoracket.nprforandroid.podcast.Podcast;
 import edu.nanoracket.nprforandroid.program.Program;
 import edu.nanoracket.nprforandroid.program.ProgramListAdapter;
 import edu.nanoracket.nprforandroid.program.ProgramListFetcher;
@@ -93,6 +94,7 @@ public class ProgramListFragment extends ListFragment {
          Log.i(TAG,"News selected: " + program);
          Intent i = new Intent(getActivity(), PodcastListActivity.class);
          i.putExtra(PodcastListFragment.PODCAST_SRC, program.getSource());
+         i.putExtra(PodcastListFragment.PODCAST_PROGRAM, program.getName());
          i.putExtra(PodcastListFragment.PODCAST_IMAGE, imagePostions[position]);
          startActivity(i);
       }
