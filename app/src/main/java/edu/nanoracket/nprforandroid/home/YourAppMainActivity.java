@@ -1,10 +1,12 @@
 package edu.nanoracket.nprforandroid.home;
 
+import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
@@ -27,7 +29,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     //private String[] drawerLists;
     StoryLab storyLab;
 
-    private String newsTopicId;
+    private String newsTopicId, newsTopic;
 
 
     @Override
@@ -40,6 +42,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
         storyLab = StoryLab.getInstance(this);
             if ( savedInstanceState == null ) {
                 newsTopicId = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
+                newsTopic = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC);
                 if(newsTopicId != null){
                     storyLab.clearStories();
 
@@ -47,12 +50,12 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
                             .getStringExtra(NewsListFragment.NEWS_TOPIC_ID);*/
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content_frame,
-                                    NewsListFragment.newInstance(newsTopicId))
+                                    NewsListFragment.newInstance(newsTopicId, newsTopic))
                             .commit();
                 }else{
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content_frame,
-                                    NewsListFragment.newInstance("1003"))
+                                    NewsListFragment.newInstance("1001", "Stories"))
                             .commit();
                 }
 
@@ -70,6 +73,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void showNetworkAlert(){
         DialogFragment networkAlertFragment =
                 NetworkDialogFragment.newInstance(R.string.network_alert_title,
@@ -128,7 +132,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
                 storyLab.clearStories();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame,
-                                NewsListFragment.newInstance("1003"))
+                                NewsListFragment.newInstance("1001", "Stories"))
                         .commit();
                 break;
 

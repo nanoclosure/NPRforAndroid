@@ -61,6 +61,7 @@ public class NewsTopicsFragment extends ListFragment {
         Log.i(TAG, "News topic selected: " + mNewsTopic);
         Intent i = new Intent(getActivity(), YourAppMainActivity.class);
         i.putExtra(NewsListFragment.NEWS_TOPIC_ID, mNewsTopicMap.get(mNewsTopic));
+        i.putExtra(NewsListFragment.NEWS_TOPIC, mNewsTopic);
         startActivity(i);
     }
 

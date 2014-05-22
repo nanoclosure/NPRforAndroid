@@ -25,7 +25,7 @@
         <item>World</item>
         <item>Politics</item>
         <item>Business</item>
-        <item>Music News</item>
+        <item>Movies</item>
         <item>Science</item>
         <item>Health</item>
         <item>Technology</item>
@@ -40,13 +40,13 @@
 
     <string-array name="news_topic_code">
         <item>1003</item>
-        <item>10004</item>
+        <item>1004</item>
         <item>1014</item>
         <item>1006</item>
-        <item>1106</item>
+        <item>1145</item>
         <item>1007</item>
         <item>1128</item>
-        <item>1149</item>
+        <item>1019</item>
         <item>1008</item>
         <item>1032</item>
         <item>1059</item>

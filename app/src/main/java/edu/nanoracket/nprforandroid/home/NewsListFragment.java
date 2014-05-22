@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ import edu.nanoracket.nprforandroid.util.JSONParser;
 public class NewsListFragment extends Fragment {
     public static final String TAG = "NewsListFragment";
     public static final String NEWS_TOPIC_ID = "news_topic_id";
+    public static final String NEWS_TOPIC = "newsTopic";
     private static final String START_NUM = "stratNum";
 
     //public StoryLab storyLab = StoryLab.getInstance(getActivity());
@@ -43,10 +46,12 @@ public class NewsListFragment extends Fragment {
     private StoryListAdapter adapter = null;
     private int startNum;
     private static String newTopicId;
+    private String topic;
 
-    public static NewsListFragment newInstance(String id){
+    public static NewsListFragment newInstance(String id, String topic){
         Bundle args = new Bundle();
         args.putString(NEWS_TOPIC_ID, id);
+        args.putString(NEWS_TOPIC, topic);
         //args.putInt(START_NUM, startNum);
 
         NewsListFragment fragment = new NewsListFragment();
@@ -65,6 +70,10 @@ public class NewsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         //stories = StoryLab.get().getStoryList();
+        topic = getArguments().getString(NEWS_TOPIC);
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(topic);
+
         storyLab = StoryLab.getInstance(getActivity());
         newTopicId = getArguments().getString(NEWS_TOPIC_ID);
         //startNum = getArguments().getInt(START_NUM);
