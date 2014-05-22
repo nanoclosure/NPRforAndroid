@@ -33,6 +33,8 @@
       android:id="@+id/storyImage"
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
+      android:adjustViewBounds="true"
+      android:scaleType="fitCenter"
       android:paddingBottom="5dp"/>
     <WebView
       android:id="@+id/storyWebView"

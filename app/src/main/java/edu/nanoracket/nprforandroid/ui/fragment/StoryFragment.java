@@ -66,9 +66,9 @@ public class StoryFragment extends Fragment {
 
         Picasso.with(getActivity().getApplicationContext())
                 .load(story.getImage().getSrc())
-                .resize(720, 480)
+                //.resize(720, 480)
                 //.fit()
-                .centerCrop()
+                //.centerCrop()
                 .into(storyImageView);
 
         storyWebView.loadDataWithBaseURL(null,getTextHtml(story),
