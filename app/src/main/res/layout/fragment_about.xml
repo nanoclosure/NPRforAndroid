@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
         android:text="NPR for Android App Version 1.0"
         android:autoText="false" />
 
@@ -23,9 +24,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingTop="8dp"
         android:text="About NPR"
+        android:textStyle="bold"
         android:id="@+id/textView"
         android:autoText="false" />
 
@@ -40,7 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
         android:text="Open Source Library"
         android:id="@+id/textView3" />
 
@@ -71,5 +74,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="License: Apache 2.0"
         android:id="@+id/textView7" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/webView"
+        android:text="Website: square.github.io/picasso"
+    />
+
 
 </LinearLayout>
