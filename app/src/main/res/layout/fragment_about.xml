@@ -5,14 +5,14 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:orientation="vertical"
-    tools:context="edu.nanoracket.nprforandroid.ui.fragment.AboutFragment">
+    tools:context="edu.nanoracket.npr.ui.fragment.AboutFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
-        android:text="NPR for Android App Version 1.0"
+        android:text="NPR for Android App Version 1.1"
         android:autoText="false" />
 
     <TextView

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="edu.nanoracket.nprforandroid.ui.activity.StoryActivity" >
+    tools:context="edu.nanoracket.npr.ui.activity.StoryActivity" >
     <item
         android:id="@+id/action_save"
         android:icon="@drawable/ic_action_save"

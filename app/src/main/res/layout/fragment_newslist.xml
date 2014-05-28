@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <edu.nanoracket.nprforandroid.ui.view.LoadMoreNewsListView
+    <edu.nanoracket.npr.ui.view.LoadMoreNewsListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
