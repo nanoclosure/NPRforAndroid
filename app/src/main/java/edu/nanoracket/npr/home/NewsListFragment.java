@@ -27,16 +27,11 @@ import edu.nanoracket.npr.ui.view.LoadMoreNewsListView;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.JSONParser;
 
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- *
- */
 public class NewsListFragment extends Fragment {
     public static final String TAG = "NewsListFragment";
     public static final String NEWS_TOPIC_ID = "news_topic_id";
     public static final String NEWS_TOPIC = "newsTopic";
     private static final String START_NUM = "stratNum";
-
     //public StoryLab storyLab = StoryLab.getInstance(getActivity());
 
     private StoryLab storyLab;
@@ -69,30 +64,28 @@ public class NewsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
         //stories = StoryLab.get().getStoryList();
         topic = getArguments().getString(NEWS_TOPIC);
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-        actionBar.setTitle(topic);
+        if(topic != null){
+            actionBar.setTitle(topic);
+        }
 
         storyLab = StoryLab.getInstance(getActivity());
         newTopicId = getArguments().getString(NEWS_TOPIC_ID);
         //startNum = getArguments().getInt(START_NUM);
         new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
         startNum += Integer.parseInt(NUMRESULTS);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newslist, container, false);
-
        // loadMoreNewsListView = (LoadMoreNewsListView)view.findViewById(R.id.newslist);
         loadMoreNewsListView = (LoadMoreNewsListView)view.findViewById(android.R.id.list);
-
         setupAdapter();
-
         loadMoreNewsListView.setOnLoadMoreListener(new LoadMoreNewsListView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -100,18 +93,14 @@ public class NewsListFragment extends Fragment {
                 startNum += Integer.parseInt(NUMRESULTS);
             }
         });
-
         loadMoreNewsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Story story = ((StoryListAdapter) getListAdapter()).getItem(i);
-                //Story story = (Story)loadMoreNewsListView.getItemAtPosition(i);
+                //Story menu_storyactivity = ((StoryListAdapter) getListAdapter()).getItem(i);
+                //Story menu_storyactivity = (Story)loadMoreNewsListView.getItemAtPosition(i);
                 Story story = (Story)adapter.getItem(i);
-
-
                 Log.i(TAG, "Story id is " + story.getId());
-
                 Intent intent = new Intent(getActivity(), StoryActivity.class);
                 intent.putExtra(StoryFragment.STORY_ID, story.getId());
                 startActivity(intent);
@@ -128,11 +117,11 @@ public class NewsListFragment extends Fragment {
     };
 
     public void onListItemClick(LoadMoreNewsListView listView, View view, int position, long id) {
-        Story story = ((StoryListAdapter) getListAdapter()).getItem(position);
-        Log.i(TAG, "Story id is" + story.getId());
+        Story menu_storyactivity = ((StoryListAdapter) getListAdapter()).getItem(position);
+        Log.i(TAG, "Story id is" + menu_storyactivity.getId());
 
         Intent intent = new Intent(getActivity(), StoryActivity.class);
-        intent.putExtra(StoryFragment.STORY_ID, story.getId());
+        intent.putExtra(StoryFragment.STORY_ID, menu_storyactivity.getId());
         startActivity(intent);
     }*/
 
@@ -140,10 +129,10 @@ public class NewsListFragment extends Fragment {
 
    /* @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        Story story = ((StoryListAdapter)getListAdapter()).getItem(position);
+        Story menu_storyactivity = ((StoryListAdapter)getListAdapter()).getItem(position);
 
         Intent intent = new Intent(getActivity(),StoryActivity.class);
-        intent.putExtra(StoryFragment.STORY_ID,story.getId());
+        intent.putExtra(StoryFragment.STORY_ID,menu_storyactivity.getId());
         startActivity(intent);
 
     }*/

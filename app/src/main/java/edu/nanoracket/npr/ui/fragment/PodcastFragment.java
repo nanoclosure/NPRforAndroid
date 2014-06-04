@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.program;
+package edu.nanoracket.npr.ui.fragment;
 
 import java.io.IOException;
 import android.media.MediaPlayer;
@@ -63,7 +63,7 @@ public class PodcastFragment extends Fragment implements
         actionBar.setTitle(programName);
 
         String url = getArguments().getString(PODCAST_URL);
-        mPodcast = PodcastList.get().getNPRPodcast(url);
+        mPodcast = PodcastList.get().getPodcast(url);
         mMediaPlayer = new MediaPlayer();        
         utils = new Utilities();
         

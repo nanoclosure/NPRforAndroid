@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:id="@+id/noti_logo"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_launcher"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/noti_previous"
+        android:layout_weight="1"
+        android:src="@drawable/ic_action_previous"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:id="@+id/noti_pause"
+        android:src="@drawable/ic_action_pause"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:id="@+id/noti_play"
+        android:src="@drawable/ic_action_play"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/noti_next"
+        android:layout_weight="1"
+        android:src="@drawable/ic_action_next"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/noti_cancel"
+        android:layout_weight="1"
+        android:src="@drawable/ic_action_cancel"/>
+</LinearLayout>

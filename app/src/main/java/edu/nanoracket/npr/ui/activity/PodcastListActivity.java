@@ -1,9 +1,9 @@
 package edu.nanoracket.npr.ui.activity;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import edu.nanoracket.npr.music.MusicListFragment;
 import edu.nanoracket.npr.ui.fragment.PodcastListFragment;
 
 public class PodcastListActivity extends SingleFragmentActivity {
@@ -19,13 +19,10 @@ public class PodcastListActivity extends SingleFragmentActivity {
 	protected Fragment createFragment() {
 		 String mProgramSrc = getIntent()
 		            .getStringExtra(PodcastListFragment.PODCAST_SRC);
-
-        String programName = getIntent().getStringExtra(PodcastListFragment.PODCAST_PROGRAM);
-
-         int imagePostion = getIntent()
+         String programName = getIntent()
+                .getStringExtra(PodcastListFragment.PODCAST_PROGRAM);
+         int imagePosition = getIntent()
                     .getIntExtra(PodcastListFragment.PODCAST_IMAGE, -1);
-
-		 return PodcastListFragment.newInstance(mProgramSrc, programName, imagePostion);
+		 return MusicListFragment.newInstance(mProgramSrc, programName, imagePosition);
 	}
-
 }

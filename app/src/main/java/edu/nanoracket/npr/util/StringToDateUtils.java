@@ -15,9 +15,7 @@ public class StringToDateUtils {
 
     public String getPubDate(String str){
         String pubDatheStr;
-
         SimpleDateFormat sdf= new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss zzzz");
-
         Date date = new Date();
 
         try {
@@ -44,7 +42,6 @@ public class StringToDateUtils {
                 pubDatheStr = formatMonth(month, new Locale("en", "US")) + " " + Integer.toString(day)
                         + " " + Integer.toString(hour) + ":" + Integer.toString(minute) + "PM";
             }
-
         }else if(hour < 12){
             if(minute < 10){
                 pubDatheStr = formatMonth(month, new Locale("en", "US")) + " " + Integer.toString(day)
@@ -53,7 +50,6 @@ public class StringToDateUtils {
                 pubDatheStr = formatMonth(month, new Locale("en", "US")) + " " + Integer.toString(day)
                         + " " + Integer.toString(hour) + ":" + Integer.toString(minute) + "AM";
             }
-
         }else{
             if(minute < 10){
                 pubDatheStr = formatMonth(month, new Locale("en", "US")) + " " + Integer.toString(day)
@@ -63,8 +59,6 @@ public class StringToDateUtils {
                         + " " + Integer.toString(hour) + ":" + Integer.toString(minute) + "PM";
             }
         }
-
-
         return pubDatheStr;
     }
 
@@ -74,6 +68,4 @@ public class StringToDateUtils {
         calendar.set(Calendar.MONTH, month);
         return formatter.format(calendar.getTime());
     }
-
-
 }

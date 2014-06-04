@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import edu.nanoracket.npr.R;
-;
-
 
 public class PodcastListAdapter extends ArrayAdapter<Podcast> {
 
@@ -26,9 +24,7 @@ public class PodcastListAdapter extends ArrayAdapter<Podcast> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-
         Podcast podcast = getItem(position);
-
         ViewHolder holder = new ViewHolder();
 
         if(convertView == null){
@@ -41,7 +37,7 @@ public class PodcastListAdapter extends ArrayAdapter<Podcast> {
         holder.programImageView = (ImageView)convertView.findViewById(R.id.programImageView);
         holder.programImageView.setImageResource(imagePostion);
         holder.programTextView = (TextView)convertView.findViewById(R.id.programTextView);
-        holder.programTextView.setText(podcast.getTitle());
+        holder.programTextView.setText(Utilities.convertString(podcast.getTitle()));
         convertView.setTag(holder);
 
         return convertView;
@@ -51,6 +47,4 @@ public class PodcastListAdapter extends ArrayAdapter<Podcast> {
         ImageView programImageView;
         TextView programTextView;
     }
-
-
 }

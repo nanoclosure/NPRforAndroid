@@ -10,13 +10,14 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Map;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.news.Story;
 import edu.nanoracket.npr.news.StoryLab;
 import edu.nanoracket.npr.util.StringToDateUtils;
-import it.sephiroth.android.library.picasso.Picasso;
 
 public class StoryFragment extends Fragment {
 
@@ -74,7 +75,7 @@ public class StoryFragment extends Fragment {
         storyWebView.loadDataWithBaseURL(null,getTextHtml(story),
                 "text/html","utf-8", null);
 
-        /*storyWebView.loadDataWithBaseURL(null,String.format(HTML_FORMAT,getTextHtml(story)),
+        /*storyWebView.loadDataWithBaseURL(null,String.format(HTML_FORMAT,getTextHtml(menu_storyactivity)),
                 "text/html","utf-8", null);*/
 
         return view;
@@ -102,9 +103,9 @@ public class StoryFragment extends Fragment {
                     "body {color:#000; margin:0; font-size:12pt;}" +
                     "a {color:blue}" +
                     ".teaser {font-size: 10pt}" +
-                    "#story-icon {width: 100px; float:left; " +
+                    "#menu_storyactivity-icon {width: 100px; float:left; " +
                     "margin-right: 6pt; margin-bottom: 3pt;}" +
-                    "#story-icon img {vertical-align: middle; width: 100%%;}" +
+                    "#menu_storyactivity-icon img {vertical-align: middle; width: 100%%;}" +
                     "</style>" +
                     "</head>" +
                     "<body>" +

@@ -3,7 +3,8 @@ package edu.nanoracket.npr.podcast;
 import java.util.ArrayList;
 
 public class PodcastList {
-	private static PodcastList sNPRPodcastList;
+
+	private static PodcastList sPodcastList;
 	private ArrayList<Podcast> mPodcastList;
 	//private Context mAppContext;
 	
@@ -13,23 +14,17 @@ public class PodcastList {
 	}
 	
 	public static PodcastList get(){
-		if(sNPRPodcastList == null){
-			sNPRPodcastList = new PodcastList();
+		if(sPodcastList == null){
+			sPodcastList = new PodcastList();
 		}
-		
-		return sNPRPodcastList;
+		return sPodcastList;
 	}
 	
-	public ArrayList<Podcast> getNPRPodcastsList(){
+	public ArrayList<Podcast> getPodcastsList(){
 		return mPodcastList;
 	}
-	
-	public void clearNPRPodcastList(){
-		if(mPodcastList.size()>0)
-			mPodcastList.clear();
-	}
-	
-	public Podcast getNPRPodcast(String url){
+
+    public Podcast getPodcast(String url){
 		for(Podcast podcast : mPodcastList){
 			if(podcast.getUrl().equals(url))
 				return podcast;
@@ -37,9 +32,7 @@ public class PodcastList {
 		return null;
 	}
 
-	
-	public void addNPRPodcast(Podcast podcast){
-		mPodcastList.add(podcast);
+	public void addPodcast(Podcast podcast){
+        mPodcastList.add(podcast);
 	}
-
 }

@@ -38,10 +38,8 @@ public class Podcast {
 	public void setDuration(String duration) {
 		mDuration = duration;
 	}
-	
 	@Override
 	public String toString(){
 		return mTitle;
 	}
-
 }

@@ -29,6 +29,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     StoryLab storyLab;
 
     private String newsTopicId, newsTopic;
+    private int proListFragmentID;
 
 
     @Override
@@ -39,25 +40,26 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
             showNetworkAlert();
         }
         storyLab = StoryLab.getInstance(this);
-            if ( savedInstanceState == null ) {
-                newsTopicId = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
-                newsTopic = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC);
-                if(newsTopicId != null){
-                    storyLab.clearStories();
-
-                    /*newsTopicId = getIntent()
-                            .getStringExtra(NewsListFragment.NEWS_TOPIC_ID);*/
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame,
+        if ( savedInstanceState == null ) {
+            newsTopicId = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
+            newsTopic = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC);
+            proListFragmentID = (int)getIntent().getIntExtra(ProgramListFragment.ID, -1);
+            if(newsTopicId != null){
+                storyLab.clearStories();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame,
                                     NewsListFragment.newInstance(newsTopicId, newsTopic))
-                            .commit();
-                }else{
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame,
+                        .commit();
+             }else if(proListFragmentID == 888){
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new ProgramListFragment())
+                        .commit();
+             }else{
+                getSupportFragmentManager().beginTransaction()
+                         .replace(R.id.content_frame,
                                     NewsListFragment.newInstance("1001", "Stories"))
-                            .commit();
-                }
-
+                         .commit();
+             }
         }
     }
 

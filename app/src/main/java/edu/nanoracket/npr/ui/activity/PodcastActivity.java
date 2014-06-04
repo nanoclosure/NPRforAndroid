@@ -2,9 +2,10 @@ package edu.nanoracket.npr.ui.activity;
 
 import android.support.v4.app.Fragment;
 
-import edu.nanoracket.npr.program.PodcastFragment;
+import edu.nanoracket.npr.ui.fragment.PodcastFragment;
 
 public class PodcastActivity extends SingleFragmentActivity {
+
 	@Override
 	protected Fragment createFragment() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

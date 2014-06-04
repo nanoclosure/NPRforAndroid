@@ -15,18 +15,24 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.newscast.Newscast;
-import edu.nanoracket.npr.newscast.NewscastFetcher;
 import edu.nanoracket.npr.newscast.NewscastUtilities;
+//import edu.nanoracket.npr.util.HttpHelper;
+//import edu.nanoracket.npr.util.OkhttpHelper;
+import edu.nanoracket.npr.util.HttpHelper;
+import edu.nanoracket.npr.util.XMLParser;
 
 
 public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChangeListener{
 
-    private static final String TAG = "NewscastFragment";
+    public static final String TAG = "NewscastFragment";
     public static final String NEWSCAST_URL= "newscast.url";
+    private static final String url = "http://www.npr.org/rss/podcast.php?id=500005";
 
     private ImageView mNewscastImageView;
     private TextView mTitleTextView,mDurationTextView,mCurrenTextView;
@@ -57,7 +63,7 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        new FetchNewscastTask().execute();
+        new FetchNewscastTask().execute(url);
 
         mMediaPlayer = new MediaPlayer();
         utils = new NewscastUtilities();
@@ -141,14 +147,24 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
 
     }
 
-    private class FetchNewscastTask extends AsyncTask<Void, Void, Newscast> {
+    private class FetchNewscastTask extends AsyncTask<String, Void, Newscast> {
 
         @Override
-        protected Newscast doInBackground(Void... params){
+        protected Newscast doInBackground(String... params){
             Activity activity = getActivity();
+            Newscast newscast = new Newscast();
             if(activity == null)
-                return new Newscast();
-            return new NewscastFetcher().fetchNewscast();
+                return newscast;
+            try {
+                String xmlStr = new HttpHelper().sendURLConnectionRequest(params[0]);
+                newscast = new XMLParser(getActivity()).parseNewscast(xmlStr);
+            } catch (IOException e) {
+                Log.i(TAG, "failed to fetch newscast xml feed.");
+            } catch (XmlPullParserException e) {
+                Log.i(TAG, "parse error.");
+            }
+            return newscast;
+            //return new NewscastFetcher().fetchNewscast();
         }
 
         @Override

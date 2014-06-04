@@ -33,5 +33,6 @@
     preserved and grows.</string>
 
     <string name="open_source_msg">This app includes the following open source libraries.</string>
+    <string name="stop_service">Stop Service</string>
 
 </resources>

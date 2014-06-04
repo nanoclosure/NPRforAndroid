@@ -1,5 +1,6 @@
 package edu.nanoracket.npr.ui.fragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -11,16 +12,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.program.Program;
 import edu.nanoracket.npr.program.ProgramListAdapter;
-import edu.nanoracket.npr.program.ProgramListFetcher;
 import edu.nanoracket.npr.ui.activity.PodcastListActivity;
+import edu.nanoracket.npr.util.HttpHelper;
+import edu.nanoracket.npr.util.JSONParser;
+import edu.nanoracket.npr.util.JSONSerializer;
 
 public class ProgramListFragment extends ListFragment {
 
-    private static final String TAG = "NPRProgramsFragment";
-    public static ArrayList<Program> mPrograms;
+    private static final String TAG = "ProgramListFragment";
+    private static final String programURL =
+            "http://www.npr.org/services/apps/iphone/news/programs.json";
+    private static final String FILENAME = "programs.json";
+    public static final String ID = "ProgramListFragment.ID";
+
+    public ArrayList<Program> mPrograms = new ArrayList<Program>();
+    private String mJSONString;
     public ProgramListAdapter listAdapter;
     public ListView listView;
 
@@ -46,22 +57,68 @@ public class ProgramListFragment extends ListFragment {
             R.drawable.onlyagame
     };
 
-
+    @Override
     public void onCreate(Bundle SavedInstanceState){
         super.onCreate(SavedInstanceState);
         setHasOptionsMenu(true);
-        new FetchProgramsTask().execute();
-        //setupAdapter();
+        setRetainInstance(true);
+        try {
+            mPrograms = new JSONSerializer(getActivity().getApplicationContext(),FILENAME)
+                            .loadPrograms();
+        } catch (IOException e) {
+            Log.e(TAG, "failed to open the file");
+            new FetchProgramsTask().execute(programURL);
+        } catch (JSONException e) {
+            Log.e(TAG, "failed to convert json to class");
+            new FetchProgramsTask().execute(programURL);
+        }
+        Log.i(TAG, "onCreated is called");
     }
 
-    private class FetchProgramsTask extends AsyncTask<Void, Void, ArrayList<Program>> {
+    @Override
+    public void onStart(){
+        super.onStart();
+        setupAdapter();
+        Log.i(TAG, "onStart is called");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(mPrograms.size() > 0){
+            Log.i(TAG, "the size of programs is " + mPrograms.size());
+            try {
+                new JSONSerializer(getActivity().getApplicationContext(),FILENAME)
+                        .savePrograms(mPrograms);
+            } catch (JSONException e) {
+                Log.e(TAG, "failed to convert to JSONObject");
+            } catch (IOException e) {
+                Log.e(TAG, "failed to save to file.");
+            }
+        }
+        Log.i(TAG, "onPause is called");
+    }
+
+    private class FetchProgramsTask extends AsyncTask<String, Void, ArrayList<Program>> {
 
         @Override
-        protected ArrayList<Program> doInBackground(Void... params){
+        protected ArrayList<Program> doInBackground(String... params){
             Activity activity = getActivity();
+            ArrayList<Program> programs = new ArrayList<Program>();
+            String jsonStr = null;
             if(activity == null)
-                return new ArrayList<Program>();
-            return new ProgramListFetcher().fetchPrograms();
+                return programs;
+            //return new ProgramListFetcher().fetchPrograms();
+            try {
+                jsonStr = new HttpHelper().sendURLConnectionRequest(params[0]);
+                new JSONSerializer(getActivity(), FILENAME).saveJSONString(jsonStr);
+                programs = new JSONParser(getActivity()).parseProgramJson(jsonStr);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return programs;
         }
 
         @Override
@@ -88,7 +145,6 @@ public class ProgramListFragment extends ListFragment {
      
      @Override
  	 public void onListItemClick(ListView l, View v, int position, long id) {
-         
  		 Program program = (Program)mPrograms.get(position);
          Log.i(TAG,"News selected: " + program);
          Intent i = new Intent(getActivity(), PodcastListActivity.class);

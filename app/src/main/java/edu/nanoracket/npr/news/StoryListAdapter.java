@@ -8,10 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.util.StringToDateUtils;
-import it.sephiroth.android.library.picasso.Picasso;
 
 public class StoryListAdapter extends ArrayAdapter<Story> {
 
@@ -33,28 +34,20 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
         TextView titleTextView = (TextView)convertView.findViewById(R.id.story_title);
         TextView authorTextView = (TextView)convertView.findViewById(R.id.story_byline);
         TextView pubDateTextView = (TextView)convertView.findViewById(R.id.story_pubDate);
-
         topicTextView.setText(story.getSlug());
-
         if(story.getImage()!= null){
             Picasso.with(getContext()).load(story.getImage().getSrc()).fit()
                     .centerCrop().into(storyImageView);
         }else{
             storyImageView.setVisibility(View.INVISIBLE);
         }
-
-
         titleTextView.setText(story.getTitle());
-
         if(story.getByline()!= null){
             authorTextView.setText("by " + story.getByline().getName());
         }else {
             authorTextView.setText("by NPR Staff");
         }
-
         pubDateTextView.setText(new StringToDateUtils().getPubDate(story.getPubDate()));
-
         return convertView;
     }
-
 }

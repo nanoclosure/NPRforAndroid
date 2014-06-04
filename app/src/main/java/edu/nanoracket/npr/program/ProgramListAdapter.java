@@ -14,14 +14,12 @@ import edu.nanoracket.npr.R;
 
 
 public class ProgramListAdapter extends ArrayAdapter<Program> {
-
     private int[] imagePostions;
 
     public ProgramListAdapter(Context context, ArrayList<Program> stories, int[] imagePostions){
         super(context, R.layout.program_list_item, stories);
         this.imagePostions = imagePostions;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
@@ -49,6 +47,4 @@ public class ProgramListAdapter extends ArrayAdapter<Program> {
         ImageView programImageView;
         TextView programTextView;
     }
-
-
 }
