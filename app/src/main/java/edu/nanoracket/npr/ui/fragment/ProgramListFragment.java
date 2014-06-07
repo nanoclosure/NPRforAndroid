@@ -35,7 +35,7 @@ public class ProgramListFragment extends ListFragment {
     public ProgramListAdapter listAdapter;
     public ListView listView;
 
-    public static final int[] imagePostions = new int[] {
+    public static final int[] imagePositions = new int[] {
             R.drawable.all_things_considered,
             R.drawable.cartalk,
             R.drawable.tedradiohour,
@@ -108,7 +108,6 @@ public class ProgramListFragment extends ListFragment {
             String jsonStr = null;
             if(activity == null)
                 return programs;
-            //return new ProgramListFetcher().fetchPrograms();
             try {
                 jsonStr = new HttpHelper().sendURLConnectionRequest(params[0]);
                 new JSONSerializer(getActivity(), FILENAME).saveJSONString(jsonStr);
@@ -133,12 +132,10 @@ public class ProgramListFragment extends ListFragment {
         if(getActivity() == null  || getListView() == null) return;
 
         listView = getListView();
-        listAdapter = new ProgramListAdapter(getActivity(),mPrograms, imagePostions);
+        listAdapter = new ProgramListAdapter(getActivity(),mPrograms, imagePositions);
         if(mPrograms != null){
-            //listView.setAdapter(listAdapter);
             setListAdapter(listAdapter);
         } else {
-            //listView.setAdapter(null);
             setListAdapter(null);
         }
     }
@@ -150,7 +147,7 @@ public class ProgramListFragment extends ListFragment {
          Intent i = new Intent(getActivity(), PodcastListActivity.class);
          i.putExtra(PodcastListFragment.PODCAST_SRC, program.getSource());
          i.putExtra(PodcastListFragment.PODCAST_PROGRAM, program.getName());
-         i.putExtra(PodcastListFragment.PODCAST_IMAGE, imagePostions[position]);
+         i.putExtra(PodcastListFragment.PODCAST_IMAGE, imagePositions[position]);
          startActivity(i);
       }
 }

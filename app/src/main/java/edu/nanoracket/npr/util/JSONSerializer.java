@@ -61,7 +61,7 @@ public class JSONSerializer {
         }
     }
 
-    public String loadJSONString(){
+    public String loadJSONString() throws IOException {
         BufferedReader reader = null;
         StringBuilder jsonString = new StringBuilder();
 
@@ -72,10 +72,6 @@ public class JSONSerializer {
             while((line = reader.readLine()) != null){
                 jsonString.append(line);
             }
-        }catch (FileNotFoundException e){
-            Log.e(TAG, "can not find the file.");
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             if(reader != null){
                 try {
@@ -85,7 +81,6 @@ public class JSONSerializer {
                 }
             }
         }
-
         return jsonString.toString();
     }
 
@@ -106,8 +101,8 @@ public class JSONSerializer {
             for(int i = 0; i < array.length(); i++){
                 programs.add(new Program(array.getJSONObject(i)));
             }
-        }catch (FileNotFoundException e){
-            Log.i(TAG, "Can not find the file.");
+        //}catch (FileNotFoundException e){
+           // Log.i(TAG, "Can not find the file.");
         }finally {
             if(reader != null){
                 reader.close();

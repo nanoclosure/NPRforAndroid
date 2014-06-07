@@ -2,7 +2,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:title="Download Setting"
+        android:title="Background Update"
         android:summary="Network connectivity required to download newses."
         android:key="networkPref"
         android:defaultValue="Any"
@@ -10,13 +10,13 @@
         android:entryValues="@array/networkListValues"
         />
     <CheckBoxPreference
-        android:key="AUTO_UPDATE"
+        android:key="auto_update"
         android:title="Auto Update"
         android:summary="Select to turn on automatic updating"
         android:defaultValue="false"
         />
     <ListPreference
-        android:dependency="AUTO_UPDATE"
+        android:dependency="auto_update"
         android:title="Update Frequency"
         android:summary="Interval to check for new content."
         android:key="updatePref"

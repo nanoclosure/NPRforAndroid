@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COURSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +17,7 @@
         <activity
             android:name="edu.nanoracket.npr.home.YourAppMainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,24 +27,26 @@
         <activity
             android:name="edu.nanoracket.npr.ui.activity.PodcastListActivity"
             android:label="Podcasts"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="edu.nanoracket.npr.ui.activity.StoryActivity"
             android:parentActivityName="edu.nanoracket.npr.home.YourAppMainActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".home.YourAppMainActivity" />
         </activity>
-        <activity
-            android:name="edu.nanoracket.npr.ui.activity.PodcastActivity">
+        <activity android:name="edu.nanoracket.npr.ui.activity.PodcastActivity" >
         </activity>
 
         <service
             android:name="edu.nanoracket.npr.music.MusicService"
             android:enabled="true"
+            android:exported="false" >
+        </service>
+        <service
+            android:name="edu.nanoracket.npr.service.NewsUpdateService"
             android:exported="false" >
         </service>
     </application>

@@ -185,7 +185,6 @@ public abstract class PreferenceCompatFragment extends Fragment {
     }
 
     /** Access methods with visibility private **/
-
     private PreferenceManager createPreferenceManager() {
         try {
             Constructor<PreferenceManager> c = PreferenceManager.class.getDeclaredConstructor(Activity.class, int.class);

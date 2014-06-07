@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import edu.nanoracket.npr.newscast.Newscast;
 import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastList;
+import edu.nanoracket.npr.podcast.PodcastLab;
 
 public class XMLParser {
 
@@ -98,6 +98,7 @@ public class XMLParser {
     }
 
     public ArrayList<Podcast> parsePodcast(String xmlStr) throws XmlPullParserException, IOException{
+        PodcastLab.getInstance().clearPodcastList();
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         XmlPullParser parser = factory.newPullParser();
         parser.setInput(new StringReader(xmlStr));
@@ -139,7 +140,7 @@ public class XMLParser {
                     break;
                 case XmlPullParser.END_TAG:
                     if("item".equals(parser.getName()))
-                        PodcastList.get().addPodcast(podcast);
+                        PodcastLab.getInstance().addPodcast(podcast);
                     break;
                 case XmlPullParser.TEXT:
                     break;
@@ -148,6 +149,6 @@ public class XMLParser {
             }
             eventType = parser.next();
         }
-        return PodcastList.get().getPodcastsList();
+        return PodcastLab.getInstance().getPodcastsList();
     }
 }

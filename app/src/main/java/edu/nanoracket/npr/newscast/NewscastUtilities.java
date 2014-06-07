@@ -36,7 +36,7 @@ public class NewscastUtilities {
 	}
 	
 	/**
-	 * Function to get Progress percentage
+	 * Function to getInstance Progress percentage
 	 * @param currentDuration
 	 * @param totalDuration
 	 * */

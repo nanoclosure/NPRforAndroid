@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastList;
+import edu.nanoracket.npr.podcast.PodcastLab;
 import edu.nanoracket.npr.podcast.PodcastListAdapter;
 import edu.nanoracket.npr.ui.activity.PodcastActivity;
 import edu.nanoracket.npr.util.HttpHelper;
@@ -42,11 +42,8 @@ public class PodcastListFragment extends ListFragment {
 		args.putString(PODCAST_SRC, podcastSrc);
         args.putString(PODCAST_PROGRAM, programName);
         args.putInt(PODCAST_IMAGE, imagePostion);
-
-		
 		PodcastListFragment fragment = new PodcastListFragment();
 		fragment.setArguments(args);
-		
 		return fragment;
 	}
 	
@@ -57,14 +54,12 @@ public class PodcastListFragment extends ListFragment {
         programName = getArguments().getString(PODCAST_PROGRAM);
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle(programName);
-		podcasts = PodcastList.get().getPodcastsList();
-		//mNewsesList = NPRNewsList.get().getNPRNewsList();
+		podcasts = PodcastLab.getInstance().getPodcastsList();
 		new FetchPodcastsTask().execute();
 	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-        
 		Podcast podcast = (Podcast) podcasts.get(position);
         Log.i(TAG,"Podcasts selected: " + podcast);
         Intent i = new Intent(getActivity(), PodcastActivity.class);
@@ -91,9 +86,7 @@ public class PodcastListFragment extends ListFragment {
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             }
-
             return podcasts;
-            //return new PodcastListFetcher().fetchPodcasts(podcastSrc);
 		}
 
 		@Override

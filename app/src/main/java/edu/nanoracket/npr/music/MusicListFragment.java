@@ -27,10 +27,8 @@ import java.util.ArrayList;
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.home.YourAppMainActivity;
 import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastList;
+import edu.nanoracket.npr.podcast.PodcastLab;
 import edu.nanoracket.npr.podcast.PodcastListAdapter;
-import edu.nanoracket.npr.ui.activity.PodcastListActivity;
-import edu.nanoracket.npr.ui.fragment.PodcastListFragment;
 import edu.nanoracket.npr.ui.fragment.ProgramListFragment;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.XMLParser;
@@ -71,7 +69,7 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
         setHasOptionsMenu(true);
         //setRetainInstance(true);
 
-        podcasts = PodcastList.get().getPodcastsList();
+        podcasts = PodcastLab.getInstance().getPodcastsList();
         new FetchPodcastsTask().execute();
 
         programName = getArguments().getString(PODCAST_PROGRAM);
@@ -86,7 +84,7 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
     @Override
     public void onStart(){
         super.onStart();
-        //podcasts = PodcastList.get().getPodcastsList();
+        //podcasts = PodcastList.getInstance().getPodcastsList();
         //setupAdapter();
         setController();
         if(!musicBound){

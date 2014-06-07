@@ -2,22 +2,20 @@ package edu.nanoracket.npr.podcast;
 
 import java.util.ArrayList;
 
-public class PodcastList {
+public class PodcastLab {
 
-	private static PodcastList sPodcastList;
+	private static PodcastLab podcastLab;
 	private ArrayList<Podcast> mPodcastList;
-	//private Context mAppContext;
-	
-	private PodcastList(){
-		//mAppContext = context;
+
+	private PodcastLab(){
 		mPodcastList = new ArrayList<Podcast>();
 	}
 	
-	public static PodcastList get(){
-		if(sPodcastList == null){
-			sPodcastList = new PodcastList();
+	public static PodcastLab getInstance(){
+		if(podcastLab == null){
+			podcastLab = new PodcastLab();
 		}
-		return sPodcastList;
+		return podcastLab;
 	}
 	
 	public ArrayList<Podcast> getPodcastsList(){
@@ -31,6 +29,12 @@ public class PodcastList {
 			}
 		return null;
 	}
+
+    public void clearPodcastList(){
+        if(mPodcastList.size() != 0){
+            mPodcastList.clear();
+        }
+    }
 
 	public void addPodcast(Podcast podcast){
         mPodcastList.add(podcast);

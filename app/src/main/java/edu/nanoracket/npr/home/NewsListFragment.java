@@ -56,7 +56,6 @@ public class NewsListFragment extends Fragment {
     }
 
     public NewsListFragment() {
-        // Required empty public constructor
         startNum = 1;
     }
 
@@ -65,7 +64,7 @@ public class NewsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        //stories = StoryLab.get().getStoryList();
+        //stories = StoryLab.getInstance().getStoryList();
         topic = getArguments().getString(NEWS_TOPIC);
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         if(topic != null){
@@ -154,33 +153,27 @@ public class NewsListFragment extends Fragment {
         protected ArrayList<Story> doInBackground(String... params){
             HttpHelper helper = new HttpHelper();
             String url = helper.createURL(params[0], params[1]);
-
             try {
-                String stroiesJsonStr = helper.sendURLConnectionRequest(url);
-                return new JSONParser(getActivity()).parseStoryJson(stroiesJsonStr);
+                String storyJsonStr = helper.sendURLConnectionRequest(url);
+                return new JSONParser(getActivity()).parseStoryJson(storyJsonStr);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Story> stories){
             mStories = stories;
-
             if(adapter == null){
                 setupAdapter();
             } else if(adapter != null) {
                 adapter.notifyDataSetChanged();
             }
-
             loadMoreNewsListView.onLoadMoreComplete();
-
             super.onPostExecute(stories);
-            //setupAdapter();
         }
     }
 }

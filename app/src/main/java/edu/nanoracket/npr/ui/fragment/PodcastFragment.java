@@ -19,7 +19,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastList;
+import edu.nanoracket.npr.podcast.PodcastLab;
 import edu.nanoracket.npr.podcast.Utilities;
 
 public class PodcastFragment extends Fragment implements
@@ -63,7 +63,7 @@ public class PodcastFragment extends Fragment implements
         actionBar.setTitle(programName);
 
         String url = getArguments().getString(PODCAST_URL);
-        mPodcast = PodcastList.get().getPodcast(url);
+        mPodcast = PodcastLab.getInstance().getPodcast(url);
         mMediaPlayer = new MediaPlayer();        
         utils = new Utilities();
         
