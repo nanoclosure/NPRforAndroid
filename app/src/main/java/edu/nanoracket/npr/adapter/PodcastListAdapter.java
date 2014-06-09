@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.program;
+package edu.nanoracket.npr.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,28 +11,30 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import edu.nanoracket.npr.R;
+import edu.nanoracket.npr.model.Podcast;
+import edu.nanoracket.npr.util.StringUtils;
 
+public class PodcastListAdapter extends ArrayAdapter<Podcast> {
 
-public class ProgramListAdapter extends ArrayAdapter<Program> {
-    private int[] imagePositions;
+    private int imagePosition;
 
-    public ProgramListAdapter(Context context, ArrayList<Program> stories, int[] imagePositions){
-        super(context, R.layout.program_list_item, stories);
-        this.imagePositions = imagePositions;
+    public PodcastListAdapter(Context context, ArrayList<Podcast> podcasts, int imagePosition){
+        super(context, R.layout.program_list_item, podcasts);
+        this.imagePosition = imagePosition;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        Program program = getItem(position);
+        Podcast podcast = getItem(position);
         ViewHolder holder = new ViewHolder();
         if(convertView == null){
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.program_list_item,parent,false);
         }
         holder.programImageView = (ImageView)convertView.findViewById(R.id.programImageView);
-        holder.programImageView.setImageResource(imagePositions[position]);
+        holder.programImageView.setImageResource(imagePosition);
         holder.programTextView = (TextView)convertView.findViewById(R.id.programTextView);
-        holder.programTextView.setText(program.getName());
+        holder.programTextView.setText(StringUtils.convertString(podcast.getTitle()));
         convertView.setTag(holder);
         return convertView;
     }

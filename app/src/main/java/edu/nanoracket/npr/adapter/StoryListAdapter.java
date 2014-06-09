@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.news;
+package edu.nanoracket.npr.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import edu.nanoracket.npr.R;
+import edu.nanoracket.npr.model.Story;
 import edu.nanoracket.npr.util.DateUtils;
 
 public class StoryListAdapter extends ArrayAdapter<Story> {

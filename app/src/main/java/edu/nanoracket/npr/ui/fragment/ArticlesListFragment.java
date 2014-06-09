@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.data.ArticleListAdapter;
+import edu.nanoracket.npr.adapter.ArticleListAdapter;
 import edu.nanoracket.npr.data.ArticlesContract;
 import edu.nanoracket.npr.ui.activity.ArticleActivity;
 

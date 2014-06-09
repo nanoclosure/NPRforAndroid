@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.program;
+package edu.nanoracket.npr.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;

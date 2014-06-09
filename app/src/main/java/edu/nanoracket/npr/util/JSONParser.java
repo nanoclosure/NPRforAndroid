@@ -10,9 +10,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import edu.nanoracket.npr.news.Story;
-import edu.nanoracket.npr.news.StoryLab;
-import edu.nanoracket.npr.program.Program;
+import edu.nanoracket.npr.model.Story;
+import edu.nanoracket.npr.lab.StoryLab;
+import edu.nanoracket.npr.model.Program;
 
 public class JSONParser {
 

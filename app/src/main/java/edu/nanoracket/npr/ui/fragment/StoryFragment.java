@@ -33,8 +33,8 @@ import java.util.Map;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.data.ArticlesContract;
-import edu.nanoracket.npr.news.Story;
-import edu.nanoracket.npr.news.StoryLab;
+import edu.nanoracket.npr.model.Story;
+import edu.nanoracket.npr.lab.StoryLab;
 import edu.nanoracket.npr.util.DateUtils;
 import edu.nanoracket.npr.util.StringUtils;
 

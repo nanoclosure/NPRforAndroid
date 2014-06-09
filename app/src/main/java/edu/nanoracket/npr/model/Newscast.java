@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.newscast;
+package edu.nanoracket.npr.model;
 
 public class Newscast {
 

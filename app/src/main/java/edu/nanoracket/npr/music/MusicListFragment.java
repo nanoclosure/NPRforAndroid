@@ -26,9 +26,9 @@ import java.util.ArrayList;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.home.YourAppMainActivity;
-import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastLab;
-import edu.nanoracket.npr.podcast.PodcastListAdapter;
+import edu.nanoracket.npr.model.Podcast;
+import edu.nanoracket.npr.lab.PodcastLab;
+import edu.nanoracket.npr.adapter.PodcastListAdapter;
 import edu.nanoracket.npr.ui.fragment.ProgramListFragment;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.XMLParser;

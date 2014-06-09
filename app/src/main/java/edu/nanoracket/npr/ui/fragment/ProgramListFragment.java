@@ -15,8 +15,8 @@ import android.widget.ListView;
 import org.json.JSONException;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.program.Program;
-import edu.nanoracket.npr.program.ProgramListAdapter;
+import edu.nanoracket.npr.model.Program;
+import edu.nanoracket.npr.adapter.ProgramListAdapter;
 import edu.nanoracket.npr.ui.activity.PodcastListActivity;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.JSONParser;

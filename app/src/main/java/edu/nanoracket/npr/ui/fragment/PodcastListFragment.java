@@ -16,9 +16,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastLab;
-import edu.nanoracket.npr.podcast.PodcastListAdapter;
+import edu.nanoracket.npr.model.Podcast;
+import edu.nanoracket.npr.lab.PodcastLab;
+import edu.nanoracket.npr.adapter.PodcastListAdapter;
 import edu.nanoracket.npr.ui.activity.PodcastActivity;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.XMLParser;

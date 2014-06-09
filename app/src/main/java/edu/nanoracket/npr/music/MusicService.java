@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.podcast.Podcast;
+import edu.nanoracket.npr.model.Podcast;
 import edu.nanoracket.npr.util.StringUtils;
 import edu.nanoracket.npr.ui.activity.PodcastListActivity;
 import edu.nanoracket.npr.ui.fragment.PodcastListFragment;

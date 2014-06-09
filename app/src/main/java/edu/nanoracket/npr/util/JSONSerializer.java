@@ -16,7 +16,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
-import edu.nanoracket.npr.program.Program;
+import edu.nanoracket.npr.model.Program;
 
 public class JSONSerializer {
 

@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-import edu.nanoracket.npr.newscast.Newscast;
-import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastLab;
+import edu.nanoracket.npr.model.Newscast;
+import edu.nanoracket.npr.model.Podcast;
+import edu.nanoracket.npr.lab.PodcastLab;
 
 public class XMLParser {
 

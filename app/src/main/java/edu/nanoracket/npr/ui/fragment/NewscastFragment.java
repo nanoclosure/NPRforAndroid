@@ -20,7 +20,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.newscast.Newscast;
+import edu.nanoracket.npr.model.Newscast;
 import edu.nanoracket.npr.util.CastUtils;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.XMLParser;

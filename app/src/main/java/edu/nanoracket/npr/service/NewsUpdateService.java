@@ -12,7 +12,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import edu.nanoracket.npr.news.Story;
+import edu.nanoracket.npr.model.Story;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.JSONParser;
 

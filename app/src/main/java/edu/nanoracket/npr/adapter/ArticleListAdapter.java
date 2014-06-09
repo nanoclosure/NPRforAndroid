@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.data;
+package edu.nanoracket.npr.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 import edu.nanoracket.npr.R;
+import edu.nanoracket.npr.data.ArticlesContract;
 
 public class ArticleListAdapter extends CursorAdapter{
 

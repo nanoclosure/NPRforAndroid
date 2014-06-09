@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.news.StoryLab;
+import edu.nanoracket.npr.lab.StoryLab;
 import edu.nanoracket.npr.service.NewsUpdateService;
 import edu.nanoracket.npr.ui.fragment.AboutFragment;
 import edu.nanoracket.npr.ui.fragment.ArticlesListFragment;

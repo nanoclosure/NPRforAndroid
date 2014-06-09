@@ -1,6 +1,8 @@
-package edu.nanoracket.npr.podcast;
+package edu.nanoracket.npr.lab;
 
 import java.util.ArrayList;
+
+import edu.nanoracket.npr.model.Podcast;
 
 public class PodcastLab {
 

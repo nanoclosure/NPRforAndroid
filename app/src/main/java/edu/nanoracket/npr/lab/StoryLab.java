@@ -1,8 +1,10 @@
-package edu.nanoracket.npr.news;
+package edu.nanoracket.npr.lab;
 
 import android.content.Context;
 
 import java.util.ArrayList;
+
+import edu.nanoracket.npr.model.Story;
 
 public class StoryLab {
     private Context context;

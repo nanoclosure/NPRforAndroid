@@ -1,4 +1,4 @@
-package edu.nanoracket.npr.podcast;
+package edu.nanoracket.npr.model;
 
 public class Podcast {
 	

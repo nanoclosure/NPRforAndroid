@@ -18,9 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.news.Story;
-import edu.nanoracket.npr.news.StoryLab;
-import edu.nanoracket.npr.news.StoryListAdapter;
+import edu.nanoracket.npr.model.Story;
+import edu.nanoracket.npr.lab.StoryLab;
+import edu.nanoracket.npr.adapter.StoryListAdapter;
 import edu.nanoracket.npr.ui.activity.StoryActivity;
 import edu.nanoracket.npr.ui.fragment.StoryFragment;
 import edu.nanoracket.npr.ui.view.LoadMoreNewsListView;

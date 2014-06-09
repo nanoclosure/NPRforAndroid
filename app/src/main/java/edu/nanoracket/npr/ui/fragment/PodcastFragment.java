@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.PodcastLab;
+import edu.nanoracket.npr.model.Podcast;
+import edu.nanoracket.npr.lab.PodcastLab;
 import edu.nanoracket.npr.util.CastUtils;
 
 public class PodcastFragment extends Fragment implements
