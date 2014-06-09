@@ -39,6 +39,14 @@
         </activity>
         <activity android:name="edu.nanoracket.npr.ui.activity.PodcastActivity" >
         </activity>
+        <activity
+            android:name="edu.nanoracket.npr.ui.activity.ArticleActivity"
+            android:parentActivityName="edu.nanoracket.npr.home.YourAppMainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".home.YourAppMainActivity" />
+        </activity>
 
         <service
             android:name="edu.nanoracket.npr.music.MusicService"
@@ -49,6 +57,13 @@
             android:name="edu.nanoracket.npr.service.NewsUpdateService"
             android:exported="false" >
         </service>
+
+        <provider
+            android:name="edu.nanoracket.npr.data.ArticleProvider"
+            android:authorities="edu.nanoracket.npr.ARTICLES"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>

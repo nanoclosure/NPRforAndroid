@@ -26,9 +26,7 @@ public class NavMenuItem implements NavDrawerItem{
         item.setUpdateActionBarTitle(updateActionBarTitle);
         item.setCheckable(checkable);
         return item;
-
     }
-
 
     @Override
     public int getType() {

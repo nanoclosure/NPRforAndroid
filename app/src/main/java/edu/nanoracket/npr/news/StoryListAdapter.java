@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.util.StringToDateUtils;
+import edu.nanoracket.npr.util.DateUtils;
 
 public class StoryListAdapter extends ArrayAdapter<Story> {
 
@@ -47,7 +47,7 @@ public class StoryListAdapter extends ArrayAdapter<Story> {
         }else {
             authorTextView.setText("by NPR Staff");
         }
-        pubDateTextView.setText(new StringToDateUtils().getPubDate(story.getPubDate()));
+        pubDateTextView.setText(DateUtils.getPubDate(story.getPubDate()));
         return convertView;
     }
 }

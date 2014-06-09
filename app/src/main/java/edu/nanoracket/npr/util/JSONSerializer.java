@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,7 +34,6 @@ public class JSONSerializer {
         for(Program program : programs){
             array.put(program.toJSON());
         }
-
         Writer writer = null;
         try {
             OutputStream out = mContext.openFileOutput(mFileName, Context.MODE_PRIVATE);
@@ -46,6 +44,31 @@ public class JSONSerializer {
                 writer.close();
             }
         }
+    }
+
+    public ArrayList<Program> loadPrograms() throws IOException, JSONException {
+        ArrayList<Program> programs = new ArrayList<Program>();
+        BufferedReader reader = null;
+
+        try{
+            InputStream in = mContext.openFileInput(mFileName);
+            reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder jsonString = new StringBuilder();
+            String line = null;
+            while((line = reader.readLine())!= null){
+                jsonString.append(line);
+            }
+            Log.i(TAG, "The json string is: " + jsonString.toString());
+            JSONArray array = (JSONArray)new JSONTokener(jsonString.toString()).nextValue();
+            for(int i = 0; i < array.length(); i++){
+                programs.add(new Program(array.getJSONObject(i)));
+            }
+        }finally {
+            if(reader != null){
+                reader.close();
+            }
+        }
+        return programs;
     }
 
     public void saveJSONString(String jsonStr) throws IOException {
@@ -82,33 +105,5 @@ public class JSONSerializer {
             }
         }
         return jsonString.toString();
-    }
-
-    public ArrayList<Program> loadPrograms() throws IOException, JSONException {
-        ArrayList<Program> programs = new ArrayList<Program>();
-        BufferedReader reader = null;
-
-        try{
-            InputStream in = mContext.openFileInput(mFileName);
-            reader = new BufferedReader(new InputStreamReader(in));
-            StringBuilder jsonString = new StringBuilder();
-            String line = null;
-            while((line = reader.readLine())!= null){
-                jsonString.append(line);
-            }
-            Log.i(TAG, "The json string is: " + jsonString.toString());
-            JSONArray array = (JSONArray)new JSONTokener(jsonString.toString()).nextValue();
-            for(int i = 0; i < array.length(); i++){
-                programs.add(new Program(array.getJSONObject(i)));
-            }
-        //}catch (FileNotFoundException e){
-           // Log.i(TAG, "Can not find the file.");
-        }finally {
-            if(reader != null){
-                reader.close();
-            }
-        }
-
-        return programs;
     }
 }

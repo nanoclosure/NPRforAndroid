@@ -10,9 +10,7 @@ import edu.nanoracket.npr.R;
 
 public class AboutFragment extends Fragment {
 
-    public AboutFragment() {
-
-    }
+    public AboutFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

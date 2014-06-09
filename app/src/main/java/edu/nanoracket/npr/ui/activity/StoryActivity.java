@@ -1,21 +1,14 @@
 package edu.nanoracket.npr.ui.activity;
 
-import android.content.Intent;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.ui.fragment.StoryFragment;
 
 public class StoryActivity extends ActionBarActivity {
     public static final String TAG = "StoryActivity";
-
-    private ShareActionProvider actionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +17,7 @@ public class StoryActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String id = (String)getIntent().getStringExtra(StoryFragment.STORY_ID);
+        String id = getIntent().getStringExtra(StoryFragment.STORY_ID);
         Log.i(TAG, "Story id is: " + id);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -34,21 +27,21 @@ public class StoryActivity extends ActionBarActivity {
     }
 
 
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_storyactivity, menu);
+        //getMenuInflater().inflate(R.menu.menu_storyactivity, menu);
+        //MenuItem saveItem = menu.findItem(R.id.action_save);
+        //MenuItem shareItem = menu.findItem(R.id.action_share);
 
-        MenuItem saveItem = menu.findItem(R.id.action_save);
-        MenuItem shareItem = menu.findItem(R.id.action_share);
-
-        actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
-        actionProvider.setShareIntent(getDefaultIntent());
-
+        //actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        //actionProvider.setShareIntent(getDefaultIntent());
         return super.onCreateOptionsMenu(menu);
-
     }
+*/
 
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -60,11 +53,7 @@ public class StoryActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+*/
 
-    private Intent getDefaultIntent() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/*");
-        return intent;
-    }
 
 }

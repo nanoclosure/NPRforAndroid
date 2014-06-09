@@ -8,7 +8,7 @@ public class PodcastLab {
 	private ArrayList<Podcast> mPodcastList;
 
 	private PodcastLab(){
-		mPodcastList = new ArrayList<Podcast>();
+        mPodcastList = new ArrayList<Podcast>();
 	}
 	
 	public static PodcastLab getInstance(){
@@ -19,7 +19,7 @@ public class PodcastLab {
 	}
 	
 	public ArrayList<Podcast> getPodcastsList(){
-		return mPodcastList;
+        return mPodcastList;
 	}
 
     public Podcast getPodcast(String url){

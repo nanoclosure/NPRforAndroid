@@ -14,32 +14,26 @@ import edu.nanoracket.npr.R;
 
 
 public class ProgramListAdapter extends ArrayAdapter<Program> {
-    private int[] imagePostions;
+    private int[] imagePositions;
 
-    public ProgramListAdapter(Context context, ArrayList<Program> stories, int[] imagePostions){
+    public ProgramListAdapter(Context context, ArrayList<Program> stories, int[] imagePositions){
         super(context, R.layout.program_list_item, stories);
-        this.imagePostions = imagePostions;
+        this.imagePositions = imagePositions;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Program program = getItem(position);
-
         ViewHolder holder = new ViewHolder();
-
         if(convertView == null){
             convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.program_list_item,parent,false);
         }
-
-        //ImageView imageView =(ImageView) convertView.findViewById(R.id.programImageView);
-        //imageView.setImageResource(R.drawable.all_things_considered);
         holder.programImageView = (ImageView)convertView.findViewById(R.id.programImageView);
-        holder.programImageView.setImageResource(imagePostions[position]);
+        holder.programImageView.setImageResource(imagePositions[position]);
         holder.programTextView = (TextView)convertView.findViewById(R.id.programTextView);
         holder.programTextView.setText(program.getName());
         convertView.setTag(holder);
-
         return convertView;
     }
 

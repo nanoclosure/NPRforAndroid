@@ -18,11 +18,11 @@ public class PodcastListActivity extends SingleFragmentActivity {
 	@Override
 	protected Fragment createFragment() {
 		 String mProgramSrc = getIntent()
-		            .getStringExtra(PodcastListFragment.PODCAST_SRC);
+		         .getStringExtra(PodcastListFragment.PODCAST_SRC);
          String programName = getIntent()
-                .getStringExtra(PodcastListFragment.PODCAST_PROGRAM);
+                 .getStringExtra(PodcastListFragment.PODCAST_PROGRAM);
          int imagePosition = getIntent()
-                    .getIntExtra(PodcastListFragment.PODCAST_IMAGE, -1);
+                 .getIntExtra(PodcastListFragment.PODCAST_IMAGE, -1);
 		 return MusicListFragment.newInstance(mProgramSrc, programName, imagePosition);
 	}
 }

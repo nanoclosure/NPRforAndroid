@@ -1,8 +1,5 @@
 package edu.nanoracket.npr.util;
 
-/**
- * Created by Jinwei on 6/3/2014.
- */
 public class ApiConstants {
     public static final String API_URL = "http://api.npr.org/query?";
     public static final String PARAM_API_KEY = "apiKey";

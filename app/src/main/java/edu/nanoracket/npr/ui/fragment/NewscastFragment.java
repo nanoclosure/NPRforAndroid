@@ -21,9 +21,7 @@ import java.io.IOException;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.newscast.Newscast;
-import edu.nanoracket.npr.newscast.NewscastUtilities;
-//import edu.nanoracket.npr.util.HttpHelper;
-//import edu.nanoracket.npr.util.OkhttpHelper;
+import edu.nanoracket.npr.util.CastUtils;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.XMLParser;
 
@@ -35,14 +33,14 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
     private static final String url = "http://www.npr.org/rss/podcast.php?id=500005";
 
     private ImageView mNewscastImageView;
-    private TextView mTitleTextView,mDurationTextView,mCurrenTextView;
+    private TextView mTitleTextView,mDurationTextView, mCurrentTextView;
     static Newscast mNewscast;
     private ImageButton mPlayPauseButton,mForwardButton,mReverseButton,mReverse30Button;
     private SeekBar mProgressBar;
 
     private MediaPlayer mMediaPlayer;
     private int mCurPlayTime;
-    private NewscastUtilities utils;
+    private CastUtils utils;
 
     private Handler mHandler = new Handler();
     private int CurPlayTime;
@@ -54,9 +52,8 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
         fragment.setArguments(args);
         return fragment;
     }
-    public NewscastFragment() {
-        // Required empty public constructor
-    }
+
+    public NewscastFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,22 +63,18 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
         new FetchNewscastTask().execute(url);
 
         mMediaPlayer = new MediaPlayer();
-        utils = new NewscastUtilities();
+        utils = new CastUtils();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newscast, parent, false);
-
         mNewscastImageView = (ImageView)view.findViewById(R.id.podcast_image);
-
         mTitleTextView= (TextView)view.findViewById(R.id.podcast_title);
         mDurationTextView = (TextView)view.findViewById(R.id.songTotalDurationLabel);
-        mCurrenTextView = (TextView)view.findViewById(R.id.songCurrentDurationLabel);
-        mCurrenTextView.setText("0:00");
-
+        mCurrentTextView = (TextView)view.findViewById(R.id.songCurrentDurationLabel);
+        mCurrentTextView.setText("0:00");
         mProgressBar = (SeekBar)view.findViewById(R.id.play_progressBar);
-
         mReverseButton = (ImageButton)view.findViewById(R.id.podcast_rew_button);
         mReverseButton.setEnabled(false);
         mPlayPauseButton =(ImageButton)view.findViewById(R.id.podcast_play_button);
@@ -104,8 +97,6 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
                         mPlayPauseButton.setImageResource(R.drawable.play_button_pressed);
                     }
                 }
-                //Log.i(TAG,"PreparedListener Called");
-                //mMediaPlayer.start();
             }
         });
 
@@ -133,9 +124,7 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
         });
 
         mReverse30Button = (ImageButton)view.findViewById(R.id.podcast_stop_button);
-
         mForwardButton = (ImageButton)view.findViewById(R.id.podcast_ffwd_button);
-
         return view;
     }
 
@@ -164,7 +153,6 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
                 Log.i(TAG, "parse error.");
             }
             return newscast;
-            //return new NewscastFetcher().fetchNewscast();
         }
 
         @Override
@@ -173,7 +161,6 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
             mTitleTextView.setText(mNewscast.getTitle());
             mDurationTextView.setText(mNewscast.getDuration());
             Log.i(TAG, "Newscast Received: " + mNewscast);
-            //mPlayButton.setEnabled(true);
             if(mNewscast.getGuid() != null){
                 prepareNewscast();
             }
@@ -185,10 +172,8 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
             Log.i(TAG,"Media Player Called" );
             mMediaPlayer.reset();
             mMediaPlayer.setDataSource(mNewscast.getGuid());
-            //mMediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(mPodcast.getGuid()));
             Log.i(TAG,"Newscast Received: " + mNewscast.getGuid());
             mMediaPlayer.prepareAsync();
-            //mMediaPlayer.start();
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Illegal Arguments:", e);
         } catch (IllegalStateException e) {
@@ -205,53 +190,30 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
     private Runnable mUpdateTimeTask = new Runnable() {
         public void run() {
             long totalDuration = mMediaPlayer.getDuration();
-            //Log.i(TAG,"Poadcast Duration: " + mPodcast.getDuration());
-
-            //long totalDuration = utils.TimerToMilliSeconds(mPodcast.getDuration());
             long currentDuration = mMediaPlayer.getCurrentPosition();
-
-            // Displaying Total Duration time
             mDurationTextView.setText(""+utils.milliSecondsToTimer(totalDuration));
-            // Displaying time completed playing
-            mCurrenTextView.setText(""+utils.milliSecondsToTimer(currentDuration));
-
-            // Updating progress bar
+            mCurrentTextView.setText("" + utils.milliSecondsToTimer(currentDuration));
             int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
-            //Log.d("Progress", ""+progress);
             mProgressBar.setProgress(progress);
-
-            // Running this thread after 100 milliseconds
             mHandler.postDelayed(this, 100);
         }
     };
 
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {}
 
-    }
 
-    /**
-     * When user starts moving the progress handler
-     * */
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-        // remove message Handler from updating progress bar
         mHandler.removeCallbacks(mUpdateTimeTask);
     }
 
-    /**
-     * When user stops moving the progress hanlder
-     * */
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         mHandler.removeCallbacks(mUpdateTimeTask);
         int totalDuration = mMediaPlayer.getDuration();
         int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);
-
-        // forward or backward to certain seconds
         mMediaPlayer.seekTo(currentPosition);
-
-        // update timer progress again
         updateProgressBar();
     }
 }

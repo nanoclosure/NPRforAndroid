@@ -15,7 +15,7 @@ public class NetworkDialogFragment extends DialogFragment {
 
     private static final String TITLE = "title";
     private static final String MESSAGE = "message";
-    private static final String INTENTACTION = "intentAction";
+    private static final String INTENT_ACTION = "intentAction";
 
     private String intentAction;
     private int title;
@@ -26,7 +26,7 @@ public class NetworkDialogFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putInt(TITLE, title);
         args.putInt(MESSAGE, message);
-        args.putString(INTENTACTION, intentAction);
+        args.putString(INTENT_ACTION, intentAction);
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,7 +35,7 @@ public class NetworkDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState){
         title = getArguments().getInt(TITLE);
         message = getArguments().getInt(MESSAGE);
-        intentAction = getArguments().getString(INTENTACTION);
+        intentAction = getArguments().getString(INTENT_ACTION);
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(title)

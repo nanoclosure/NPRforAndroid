@@ -1,6 +1,5 @@
 package edu.nanoracket.npr.music;
 
-import android.app.LauncherActivity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,9 +22,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import edu.nanoracket.npr.R;
-import edu.nanoracket.npr.home.YourAppMainActivity;
 import edu.nanoracket.npr.podcast.Podcast;
-import edu.nanoracket.npr.podcast.Utilities;
+import edu.nanoracket.npr.util.StringUtils;
 import edu.nanoracket.npr.ui.activity.PodcastListActivity;
 import edu.nanoracket.npr.ui.fragment.PodcastListFragment;
 
@@ -213,11 +211,9 @@ public class MusicService extends Service implements
         notiIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),
                                       0, notiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //notificationViews = new RemoteViews(this.getPackageName(),R.layout.npr_noti);
-        //notificationView.setTextViewText(R.id.noti_title, podcastTitle);
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this);
-        builder.setTicker(Utilities.convertString(podcastTitle))
+        builder.setTicker(StringUtils.convertString(podcastTitle))
                 .setSmallIcon(R.drawable.navdrawer_program)
                 .setContent(notificationViews)
                 .setOngoing(true)
@@ -304,10 +300,6 @@ public class MusicService extends Service implements
             }else if(action.equals(NOTIFICATION_PLAY)){
                 player.start();
             }else if(action.equals(NOTIFICATION_STOP)){
-                //player.stop();
-                //player.release();
-                //unregisterReceiver(receiver);
-                //stopForeground(true);
                 stopSelf();
             }else if(action.equals(NOTIFICATION_PREVIOUS)){
                 playPrev();

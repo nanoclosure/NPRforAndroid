@@ -33,7 +33,6 @@ public class PodcastListFragment extends ListFragment {
 
     public ArrayList<Podcast> podcasts;
     private String programName;
-    public ListView listView;
     public PodcastListAdapter listAdapter;
 	
 	public static PodcastListFragment newInstance(String podcastSrc, String programName,
@@ -60,7 +59,7 @@ public class PodcastListFragment extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		Podcast podcast = (Podcast) podcasts.get(position);
+		Podcast podcast = podcasts.get(position);
         Log.i(TAG,"Podcasts selected: " + podcast);
         Intent i = new Intent(getActivity(), PodcastActivity.class);
         i.putExtra(PodcastFragment.PODCAST_URL,podcast.getUrl());
@@ -107,5 +106,4 @@ public class PodcastListFragment extends ListFragment {
 			setListAdapter(null);
 		}
 	}
-
 }

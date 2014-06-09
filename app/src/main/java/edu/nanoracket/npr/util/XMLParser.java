@@ -97,7 +97,8 @@ public class XMLParser {
         return newscast;
     }
 
-    public ArrayList<Podcast> parsePodcast(String xmlStr) throws XmlPullParserException, IOException{
+    public ArrayList<Podcast> parsePodcast(String xmlStr) throws
+            XmlPullParserException, IOException{
         PodcastLab.getInstance().clearPodcastList();
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         XmlPullParser parser = factory.newPullParser();

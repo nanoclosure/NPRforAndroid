@@ -31,23 +31,19 @@ public class NewsListFragment extends Fragment {
     public static final String TAG = "NewsListFragment";
     public static final String NEWS_TOPIC_ID = "news_topic_id";
     public static final String NEWS_TOPIC = "newsTopic";
-    private static final String START_NUM = "stratNum";
-    //public StoryLab storyLab = StoryLab.getInstance(getActivity());
 
-    private StoryLab storyLab;
-    private static final String NUMRESULTS = "10" ;
+    private static final String NUM_RESULTS = "10" ;
     private LoadMoreNewsListView loadMoreNewsListView;
     private static ArrayList<Story> mStories;
+    private StoryLab storyLab;
     private StoryListAdapter adapter = null;
     private int startNum;
     private static String newTopicId;
-    private String topic;
 
     public static NewsListFragment newInstance(String id, String topic){
         Bundle args = new Bundle();
         args.putString(NEWS_TOPIC_ID, id);
         args.putString(NEWS_TOPIC, topic);
-        //args.putInt(START_NUM, startNum);
 
         NewsListFragment fragment = new NewsListFragment();
         fragment.setArguments(args);
@@ -64,8 +60,7 @@ public class NewsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        //stories = StoryLab.getInstance().getStoryList();
-        topic = getArguments().getString(NEWS_TOPIC);
+        String topic = getArguments().getString(NEWS_TOPIC);
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
         if(topic != null){
             actionBar.setTitle(topic);
@@ -73,32 +68,28 @@ public class NewsListFragment extends Fragment {
 
         storyLab = StoryLab.getInstance(getActivity());
         newTopicId = getArguments().getString(NEWS_TOPIC_ID);
-        //startNum = getArguments().getInt(START_NUM);
         new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
-        startNum += Integer.parseInt(NUMRESULTS);
+        startNum += Integer.parseInt(NUM_RESULTS);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newslist, container, false);
-       // loadMoreNewsListView = (LoadMoreNewsListView)view.findViewById(R.id.newslist);
         loadMoreNewsListView = (LoadMoreNewsListView)view.findViewById(android.R.id.list);
         setupAdapter();
         loadMoreNewsListView.setOnLoadMoreListener(new LoadMoreNewsListView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
-                startNum += Integer.parseInt(NUMRESULTS);
+                startNum += Integer.parseInt(NUM_RESULTS);
             }
         });
         loadMoreNewsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Story menu_storyactivity = ((StoryListAdapter) getListAdapter()).getItem(i);
-                //Story menu_storyactivity = (Story)loadMoreNewsListView.getItemAtPosition(i);
-                Story story = (Story)adapter.getItem(i);
+                Story story = adapter.getItem(i);
                 Log.i(TAG, "Story id is " + story.getId());
                 Intent intent = new Intent(getActivity(), StoryActivity.class);
                 intent.putExtra(StoryFragment.STORY_ID, story.getId());
@@ -107,34 +98,6 @@ public class NewsListFragment extends Fragment {
         });
         return view;
     }
-
-    /*final private AdapterView.OnItemClickListener mOnClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((LoadMoreNewsListView) parent, v, position, id);
-        }
-    };
-
-    public void onListItemClick(LoadMoreNewsListView listView, View view, int position, long id) {
-        Story menu_storyactivity = ((StoryListAdapter) getListAdapter()).getItem(position);
-        Log.i(TAG, "Story id is" + menu_storyactivity.getId());
-
-        Intent intent = new Intent(getActivity(), StoryActivity.class);
-        intent.putExtra(StoryFragment.STORY_ID, menu_storyactivity.getId());
-        startActivity(intent);
-    }*/
-
-
-
-   /* @Override
-    public void onListItemClick(ListView listView, View view, int position, long id){
-        Story menu_storyactivity = ((StoryListAdapter)getListAdapter()).getItem(position);
-
-        Intent intent = new Intent(getActivity(),StoryActivity.class);
-        intent.putExtra(StoryFragment.STORY_ID,menu_storyactivity.getId());
-        startActivity(intent);
-
-    }*/
 
     public void setupAdapter(){
         if(getActivity() == null || mStories == null ) return;

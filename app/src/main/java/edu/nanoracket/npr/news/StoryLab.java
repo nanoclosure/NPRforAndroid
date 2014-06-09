@@ -18,12 +18,10 @@ public class StoryLab {
         if(storyLab == null){
             storyLab = new StoryLab(context.getApplicationContext());
         }
-
         return storyLab;
     }
 
     public ArrayList<Story> getStoryList(){
-
         return storyList;
     }
 

@@ -6,5 +6,4 @@ public interface NavDrawerItem {
     public int getType();
     public boolean updateActionBarTitle();
     public boolean isCheckable();
-
 }

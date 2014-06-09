@@ -17,6 +17,7 @@ import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.news.StoryLab;
 import edu.nanoracket.npr.service.NewsUpdateService;
 import edu.nanoracket.npr.ui.fragment.AboutFragment;
+import edu.nanoracket.npr.ui.fragment.ArticlesListFragment;
 import edu.nanoracket.npr.ui.fragment.NetworkDialogFragment;
 import edu.nanoracket.npr.ui.fragment.NewsTopicsFragment;
 import edu.nanoracket.npr.ui.fragment.NewscastFragment;
@@ -38,9 +39,6 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     private int proListFragmentID;
     private String networkPref;
     private boolean alarmPref;
-    private boolean isStartService = false;
-    private boolean wifiConnected = false;
-    private boolean mobileConnected = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
         if ( savedInstanceState == null ) {
             newsTopicId = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC_ID);
             newsTopic = getIntent().getStringExtra(NewsListFragment.NEWS_TOPIC);
-            proListFragmentID = (int)getIntent().getIntExtra(ProgramListFragment.ID, -1);
+            proListFragmentID = getIntent().getIntExtra(ProgramListFragment.ID, -1);
             if(newsTopicId != null){
                 storyLab.clearStories();
                 getSupportFragmentManager().beginTransaction()
@@ -85,11 +83,11 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     protected void onStart() {
         super.onStart();
         if(setServiceStatus()){
-            SharedPreferences sharedPreferences = PreferenceManager
-                    .getDefaultSharedPreferences(this);
-            String updateFrequency = sharedPreferences.getString("updatePref", "60");
-            NewsUpdateService.setServiceAlarm(this, Integer.valueOf(updateFrequency));
-            Log.i(TAG, "NewsUpdateService is called.");
+                SharedPreferences sharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(this);
+                String updateFrequency = sharedPreferences.getString("updatePref", "60");
+                NewsUpdateService.setServiceAlarm(this, Integer.valueOf(updateFrequency));
+                Log.i(TAG, "NewsUpdateService is called.");
         }
     }
 
@@ -105,8 +103,9 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
                 NavMenuItem.create(102, "Hourly Newscast", "navdrawer_podcast", true, true, this),
                 NavMenuItem.create(103, "News Topics", "navdrawer_topics", true, true, this),
                 NavMenuItem.create(104, "Radio Programs", "navdrawer_program", true, true, this),
-                NavMenuItem.create(105, "Settings", "navdrawer_settings", true, true,this),
-                NavMenuItem.create(106, "About NPR", "navdrawer_about", true, true, this),
+                NavMenuItem.create(105, "Saved Articles", "navdrawer_articles", true, true, this),
+                NavMenuItem.create(106, "Settings", "navdrawer_settings", true, true,this),
+                NavMenuItem.create(107, "About NPR", "navdrawer_about", true, true, this),
          };
 
         NavDrawerActivityConfiguration navDrawerActivityConfiguration =
@@ -153,10 +152,15 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
                 break;
             case 105:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new PrefsFragment())
+                        .replace(R.id.content_frame, new ArticlesListFragment())
                         .commit();
                 break;
             case 106:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, new PrefsFragment())
+                        .commit();
+                break;
+            case 107:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new AboutFragment())
                         .commit();
@@ -174,11 +178,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
         ConnectivityManager connMgr = (ConnectivityManager)this
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if(networkInfo != null && networkInfo.isConnected()){
-            return true;
-        } else {
-            return false;
-        }
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public boolean setServiceStatus(){
@@ -190,6 +190,9 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager)this
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean wifiConnected = false;
+        boolean mobileConnected = false;
+        if(networkInfo == null) return false;
         if(networkPref != null && networkInfo.isConnected()){
             wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
             mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
@@ -197,13 +200,8 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
             wifiConnected = false;
             mobileConnected = false;
         }
-
-        if((networkPref.equals(ANY) && (wifiConnected || mobileConnected))
-                || (networkPref.equals(WIFI) && wifiConnected )){
-            isStartService = true;
-        } else {
-            isStartService = false;
-        }
+        boolean isStartService = (networkPref.equals(ANY) && (wifiConnected || mobileConnected))
+                || (networkPref.equals(WIFI) && wifiConnected);
         return isStartService;
     }
 }

@@ -20,7 +20,7 @@ public class NewsTopicsFragment extends ListFragment {
 
     private String[] mTopics;
     private String[] mTopicsCode;
-    HashMap<String, String> mNewsTopicMap;
+    private HashMap<String, String> mNewsTopicMap;
 
     @Override
     public void onCreate(Bundle SavedInstanceState){
@@ -37,26 +37,10 @@ public class NewsTopicsFragment extends ListFragment {
         setListAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 mTopics));
-        //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mTopics));
     }
 
-   /* @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_topics, container, false);
-
-        ListView listView = (ListView)view.findViewById(R.id.news_topics_listView);
-
-        listView.setAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1,
-                mTopics));
-
-        return view;
-    }
-*/
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-
         String mNewsTopic = mTopics[position];
         Log.i(TAG, "News topic selected: " + mNewsTopic);
         Intent i = new Intent(getActivity(), YourAppMainActivity.class);
@@ -64,5 +48,4 @@ public class NewsTopicsFragment extends ListFragment {
         i.putExtra(NewsListFragment.NEWS_TOPIC, mNewsTopic);
         startActivity(i);
     }
-
 }
