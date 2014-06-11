@@ -27,14 +27,15 @@ import edu.nanoracket.npr.ui.view.LoadMoreNewsListView;
 import edu.nanoracket.npr.util.HttpHelper;
 import edu.nanoracket.npr.util.JSONParser;
 
-public class NewsListFragment extends Fragment {
+public class NewsListFragment extends Fragment implements
+        LoadMoreNewsListView. OnLoadMoreListener, LoadMoreNewsListView.OnItemClickListener{
     public static final String TAG = "NewsListFragment";
     public static final String NEWS_TOPIC_ID = "news_topic_id";
     public static final String NEWS_TOPIC = "newsTopic";
 
     private static final String NUM_RESULTS = "10" ;
     private LoadMoreNewsListView loadMoreNewsListView;
-    private static ArrayList<Story> mStories;
+    private ArrayList<Story> mStories;
     private StoryLab storyLab;
     private StoryListAdapter adapter = null;
     private int startNum;
@@ -44,10 +45,8 @@ public class NewsListFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(NEWS_TOPIC_ID, id);
         args.putString(NEWS_TOPIC, topic);
-
         NewsListFragment fragment = new NewsListFragment();
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -65,11 +64,19 @@ public class NewsListFragment extends Fragment {
         if(topic != null){
             actionBar.setTitle(topic);
         }
-
         storyLab = StoryLab.getInstance(getActivity());
         newTopicId = getArguments().getString(NEWS_TOPIC_ID);
         new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
         startNum += Integer.parseInt(NUM_RESULTS);
+        Log.i(TAG, "on created is called");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(adapter != null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -78,24 +85,8 @@ public class NewsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_newslist, container, false);
         loadMoreNewsListView = (LoadMoreNewsListView)view.findViewById(android.R.id.list);
         setupAdapter();
-        loadMoreNewsListView.setOnLoadMoreListener(new LoadMoreNewsListView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
-                startNum += Integer.parseInt(NUM_RESULTS);
-            }
-        });
-        loadMoreNewsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Story story = adapter.getItem(i);
-                Log.i(TAG, "Story id is " + story.getId());
-                Intent intent = new Intent(getActivity(), StoryActivity.class);
-                intent.putExtra(StoryFragment.STORY_ID, story.getId());
-                startActivity(intent);
-            }
-        });
+        loadMoreNewsListView.setOnLoadMoreListener(this);
+        loadMoreNewsListView.setOnItemClickListener(this);
         return view;
     }
 
@@ -105,15 +96,31 @@ public class NewsListFragment extends Fragment {
         if(mStories != null){
             adapter = new StoryListAdapter(getActivity(), mStories);
             loadMoreNewsListView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         } else {
             loadMoreNewsListView.setAdapter(null);
         }
     }
 
-    private class LoadingStoriesTask extends AsyncTask<String, Void, ArrayList<Story>> {
+    @Override
+    public void onLoadMore() {
+        new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
+        startNum += Integer.parseInt(NUM_RESULTS);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Story story = adapter.getItem(i);
+        Log.i(TAG, "Story id is " + story.getId());
+        Intent intent = new Intent(getActivity(), StoryActivity.class);
+        intent.putExtra(StoryFragment.STORY_ID, story.getId());
+        startActivity(intent);
+    }
+
+    private class LoadingStoriesTask extends AsyncTask<String, Void, StoryLab> {
 
         @Override
-        protected ArrayList<Story> doInBackground(String... params){
+        protected StoryLab doInBackground(String... params){
             HttpHelper helper = new HttpHelper();
             String url = helper.createURL(params[0], params[1]);
             try {
@@ -128,15 +135,16 @@ public class NewsListFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Story> stories){
-            mStories = stories;
+        protected void onPostExecute(StoryLab storyLab){
+            mStories = StoryLab.getInstance(getActivity()).getStoryList();
             if(adapter == null){
                 setupAdapter();
             } else if(adapter != null) {
                 adapter.notifyDataSetChanged();
+                loadMoreNewsListView.onLoadMoreComplete();
             }
-            loadMoreNewsListView.onLoadMoreComplete();
-            super.onPostExecute(stories);
+            //loadMoreNewsListView.onLoadMoreComplete();
+            super.onPostExecute(storyLab);
         }
     }
 }

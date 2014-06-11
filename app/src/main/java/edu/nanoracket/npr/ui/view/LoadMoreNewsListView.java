@@ -20,7 +20,6 @@ public class LoadMoreNewsListView extends ListView {
 
     public LoadMoreNewsListView(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);
-
         init(context);
     }
 
@@ -39,7 +38,6 @@ public class LoadMoreNewsListView extends ListView {
         footerView = View.inflate(context, R.layout.load_more_footer, null);
         addFooterView(footerView);
         hideFooterView();
-
         super.setOnScrollListener(superOnScrollListener);
     }
 
@@ -91,12 +89,10 @@ public class LoadMoreNewsListView extends ListView {
                 if(onLoadMoreListener != null){
                     onLoadMoreListener.onLoadMore();
                 }
-
             }
 
         }
     };
-
 
     public interface OnLoadMoreListener {
         void onLoadMore();

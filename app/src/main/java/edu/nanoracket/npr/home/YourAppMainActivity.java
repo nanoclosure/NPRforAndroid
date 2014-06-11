@@ -82,13 +82,19 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
         if(setServiceStatus()){
-                SharedPreferences sharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(this);
-                String updateFrequency = sharedPreferences.getString("updatePref", "60");
-                NewsUpdateService.setServiceAlarm(this, Integer.valueOf(updateFrequency));
-                Log.i(TAG, "NewsUpdateService is called.");
+            SharedPreferences sharedPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(this);
+            String updateFrequency = sharedPreferences.getString("updatePref", "60");
+            NewsUpdateService.setServiceAlarm(this, Integer.valueOf(updateFrequency));
+            Log.i(TAG, "NewsUpdateService is called.");
         }
+        Log.i(TAG, "on Pause is called");
     }
 
     @Override

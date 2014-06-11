@@ -20,8 +20,6 @@ public class NewsUpdateService extends IntentService {
 
     public static final String TAG = "NewsUpdateService";
     public static final int MINUTE = 60000;
-
-    private static ArrayList<Story> mStories;
     private HttpHelper httpHelper = new HttpHelper();
 
     public NewsUpdateService() {
@@ -33,10 +31,7 @@ public class NewsUpdateService extends IntentService {
         String url = httpHelper.createURL("1001", "Stories");
         try {
             String storyJsonStr = httpHelper.sendURLConnectionRequest(url);
-            mStories = new JSONParser(getApplicationContext()).parseStoryJson(storyJsonStr);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         Log.i(TAG, "onHandleIntent is called");
