@@ -32,6 +32,8 @@ public class ArticleFragment extends Fragment
     public static final String Article_URI = "article_uri";
     private static final int LOADER_ID = 29;
 
+    private Bundle webViewBundle;
+
     private static final String[] PROJ = new String[]{
             ArticlesContract.Columns.ID,
             ArticlesContract.Columns.TITLE,
@@ -77,22 +79,39 @@ public class ArticleFragment extends Fragment
         String uri = null;
         if(savedInstanceState == null){
             uri = getArguments().getString(Article_URI);
-        }else{
+        }/*else{
             uri = savedInstanceState.getString(Article_URI);
-        }
+        }*/
         articleUri = Uri.parse(uri);
         Log.i(TAG, "Article URI is: " + uri);
+        /*if(articleUri != null){
+            getLoaderManager().initLoader(LOADER_ID, null, this).forceLoad();
+        }*/
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
         if(articleUri != null){
             getLoaderManager().initLoader(LOADER_ID, null, this).forceLoad();
         }
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        webViewBundle = new Bundle();
+        storyWebView.saveState(webViewBundle);
+    }
+
+/*
+    @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         if(articleUri != null){
             savedInstanceState.putString(Article_URI, articleUri.toString());
         }
     }
+*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
@@ -146,7 +165,4 @@ public class ArticleFragment extends Fragment
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
 }

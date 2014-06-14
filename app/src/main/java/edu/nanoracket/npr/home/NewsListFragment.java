@@ -1,8 +1,14 @@
 package edu.nanoracket.npr.home;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +27,7 @@ import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.model.Story;
 import edu.nanoracket.npr.lab.StoryLab;
 import edu.nanoracket.npr.adapter.StoryListAdapter;
+import edu.nanoracket.npr.service.NewsUpdateService;
 import edu.nanoracket.npr.ui.activity.StoryActivity;
 import edu.nanoracket.npr.ui.fragment.StoryFragment;
 import edu.nanoracket.npr.ui.view.LoadMoreNewsListView;
@@ -29,17 +36,23 @@ import edu.nanoracket.npr.util.JSONParser;
 
 public class NewsListFragment extends Fragment implements
         LoadMoreNewsListView. OnLoadMoreListener, LoadMoreNewsListView.OnItemClickListener{
+
     public static final String TAG = "NewsListFragment";
     public static final String NEWS_TOPIC_ID = "news_topic_id";
     public static final String NEWS_TOPIC = "newsTopic";
+    public static final String WIFI = "Wi-Fi";
+    public static final String ANY = "Any";
 
     private static final String NUM_RESULTS = "10" ;
     private LoadMoreNewsListView loadMoreNewsListView;
     private ArrayList<Story> mStories;
+    private ProgressDialog progressDialog;
     private StoryLab storyLab;
     private StoryListAdapter adapter = null;
     private int startNum;
     private static String newTopicId;
+    private String networkPref;
+    private boolean alarmPref;
 
     public static NewsListFragment newInstance(String id, String topic){
         Bundle args = new Bundle();
@@ -64,6 +77,7 @@ public class NewsListFragment extends Fragment implements
         if(topic != null){
             actionBar.setTitle(topic);
         }
+        progressDialog = ProgressDialog.show(getActivity(),"", "Loading Stories...");
         storyLab = StoryLab.getInstance(getActivity());
         newTopicId = getArguments().getString(NEWS_TOPIC_ID);
         new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
@@ -76,6 +90,18 @@ public class NewsListFragment extends Fragment implements
         super.onResume();
         if(adapter != null){
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(newTopicId == "1001" && setServiceStatus()){
+            SharedPreferences sharedPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+            String updateFrequency = sharedPreferences.getString("updatePref", "60");
+            NewsUpdateService.setServiceAlarm(getActivity(), Integer.valueOf(updateFrequency));
+            Log.i(TAG, "NewsUpdateService is called.");
         }
     }
 
@@ -100,6 +126,8 @@ public class NewsListFragment extends Fragment implements
         } else {
             loadMoreNewsListView.setAdapter(null);
         }
+        progressDialog.dismiss();
+
     }
 
     @Override
@@ -115,6 +143,30 @@ public class NewsListFragment extends Fragment implements
         Intent intent = new Intent(getActivity(), StoryActivity.class);
         intent.putExtra(StoryFragment.STORY_ID, story.getId());
         startActivity(intent);
+    }
+
+    public boolean setServiceStatus(){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        alarmPref = sharedPreferences.getBoolean("auto_update", false);
+        networkPref = sharedPreferences.getString("networkPref", ANY);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean wifiConnected = false;
+        boolean mobileConnected = false;
+        if(networkInfo == null) return false;
+        if(networkPref != null && networkInfo.isConnected()){
+            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+        } else {
+            wifiConnected = false;
+            mobileConnected = false;
+        }
+        boolean isStartService = (networkPref.equals(ANY) && (wifiConnected || mobileConnected))
+                || (networkPref.equals(WIFI) && wifiConnected);
+        return isStartService;
     }
 
     private class LoadingStoriesTask extends AsyncTask<String, Void, StoryLab> {
