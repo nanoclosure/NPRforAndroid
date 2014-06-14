@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 
 public class ResourceUtils {
 
-	public static Drawable getDrawableByName( String name, Context context ) {
+	public static Drawable getDrawableByName(String name, Context context ) {
 		int drawableResource = context.getResources().getIdentifier(
 						name,
 						"drawable",
@@ -16,7 +16,7 @@ public class ResourceUtils {
 		return context.getResources().getDrawable(drawableResource);
 	}
 	
-	public static int getDrawableIdByName( String name, Context context ) {
+	public static int getDrawableIdByName(String name, Context context ) {
 		int drawableResource = context.getResources().getIdentifier(
 						name,
 						"drawable",

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class ImageSerializer {
@@ -18,9 +19,10 @@ public class ImageSerializer {
         this.fileName = fileName;
     }
 
-    public void saveImage(ImageView imageView) throws FileNotFoundException {
+    public void saveImage(ImageView imageView) throws IOException {
         OutputStream out = context.openFileOutput(fileName, Context.MODE_PRIVATE);
         Bitmap bitmap = imageView.getDrawingCache();
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+        out.close();
     }
 }
