@@ -67,13 +67,13 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
     public void onCreate(Bundle SavedInstanceState){
         super.onCreate(SavedInstanceState);
         setHasOptionsMenu(true);
-        //setRetainInstance(true);
+        setRetainInstance(true);
 
         podcasts = PodcastLab.getInstance().getPodcastsList();
         new FetchPodcastsTask().execute();
 
         programName = getArguments().getString(PODCAST_PROGRAM);
-        if(SavedInstanceState != null){
+        if(programName == null && SavedInstanceState != null){
             programName = SavedInstanceState.getString(PROGRAM_NAME);
         }
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();

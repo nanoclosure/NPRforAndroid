@@ -42,7 +42,9 @@ public class StoryLab {
         }
     }
 
-    public void addStory(Story story){
-        storyList.add(story);
+    public synchronized void addStory(Story story){
+        if(getStory(story.getId()) == null){
+            storyList.add(story);
+        }
     }
 }

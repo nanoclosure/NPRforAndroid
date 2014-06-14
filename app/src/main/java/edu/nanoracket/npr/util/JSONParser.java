@@ -23,7 +23,7 @@ public class JSONParser {
         this.context = context;
     }
 
-    public ArrayList<Story> parseStoryJson(String jsonStr) throws JSONException {
+    public StoryLab parseStoryJson(String jsonStr) throws JSONException {
         StoryLab storyLab = StoryLab.getInstance(context);
         JSONObject storiesJsonObject = new JSONObject(jsonStr);
         JSONArray storiesJsonArray = storiesJsonObject.getJSONObject("list").getJSONArray("story");
@@ -85,7 +85,8 @@ public class JSONParser {
             }
             storyLab.addStory(story);
         }
-        return storyLab.getStoryList();
+
+        return storyLab;
     }
 
     public ArrayList<Program> parseProgramJson(String jsonStr) throws JSONException{

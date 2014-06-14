@@ -91,21 +91,16 @@ public class Story {
     public static class Byline {
         private final String name;
 
-
         public Byline(String name) {
             this.name = name;
-
         }
 
         public String getName() {
             return name;
         }
-
-
     }
 
     public static class Audio {
-
         private final String id;
         private final String type;
         private final String duration;
@@ -172,7 +167,6 @@ public class Story {
         private final String hasBorder;
         //private final String caption;
 
-
         public Image(String id, String type, String width, String src, String hasBorder) {
             this.id = id;
             this.type = type;
@@ -197,11 +191,9 @@ public class Story {
 
     public static class Text {
         private final Map<Integer, String> paragraphs;
-
         public Text(Map<Integer, String> paragraphs) {
             this.paragraphs = paragraphs;
         }
-
         @SuppressWarnings("unused")
         public Map<Integer, String> getParagraphs() {
             return paragraphs;
@@ -210,11 +202,9 @@ public class Story {
 
     public static class TextWithHtml {
         private final Map<Integer, String> paragraphs;
-
         public TextWithHtml(Map<Integer, String> paragraphs) {
             this.paragraphs = paragraphs;
         }
-
         public Map<Integer, String> getParagraphs() {
             return paragraphs;
         }

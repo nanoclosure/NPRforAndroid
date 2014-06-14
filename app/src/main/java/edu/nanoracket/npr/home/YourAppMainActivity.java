@@ -37,8 +37,7 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     private StoryLab storyLab;
     private String newsTopicId, newsTopic;
     private int proListFragmentID;
-    private String networkPref;
-    private boolean alarmPref;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,13 +81,12 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(setServiceStatus()){
-                SharedPreferences sharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(this);
-                String updateFrequency = sharedPreferences.getString("updatePref", "60");
-                NewsUpdateService.setServiceAlarm(this, Integer.valueOf(updateFrequency));
-                Log.i(TAG, "NewsUpdateService is called.");
-        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.i(TAG, "on Pause is called");
     }
 
     @Override
@@ -179,29 +177,5 @@ public class YourAppMainActivity extends AbstractNavDrawerActivity {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
-    }
-
-    public boolean setServiceStatus(){
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        alarmPref = sharedPreferences.getBoolean("auto_update", false);
-        networkPref = sharedPreferences.getString("networkPref", ANY);
-
-        ConnectivityManager connectivityManager = (ConnectivityManager)this
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean wifiConnected = false;
-        boolean mobileConnected = false;
-        if(networkInfo == null) return false;
-        if(networkPref != null && networkInfo.isConnected()){
-            wifiConnected = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
-            mobileConnected = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
-        } else {
-            wifiConnected = false;
-            mobileConnected = false;
-        }
-        boolean isStartService = (networkPref.equals(ANY) && (wifiConnected || mobileConnected))
-                || (networkPref.equals(WIFI) && wifiConnected);
-        return isStartService;
     }
 }

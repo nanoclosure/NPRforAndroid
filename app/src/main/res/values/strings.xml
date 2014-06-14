@@ -34,5 +34,6 @@
 
     <string name="open_source_msg">This app includes the following open source libraries.</string>
     <string name="stop_service">Stop Service</string>
+    <string name="action_delete">Delete</string>
 
 </resources>

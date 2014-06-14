@@ -49,6 +49,7 @@ public class StoryFragment extends Fragment {
     private WebView storyWebView;
     private Story story;
     private String imagePath;
+    private String storyId;
 
     public static StoryFragment newInstance(String id){
         Bundle args = new Bundle();
@@ -61,10 +62,16 @@ public class StoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
-        String id = getArguments().getString(STORY_ID);
-        Log.i(TAG, "Story id is " + id);
-        story = StoryLab.getInstance(getActivity()).getStory(id);
+        storyId = getArguments().getString(STORY_ID);
+
+        if(storyId == null && savedInstanceState != null){
+            storyId = savedInstanceState.getString(STORY_ID);
+        }
+
+        Log.i(TAG, "Story id is " + storyId);
+        story = StoryLab.getInstance(getActivity()).getStory(storyId);
         Log.i(TAG, "Story id is " + story.getId());
         Log.i(TAG, "Story title is " + story.getTitle());
     }
@@ -91,6 +98,13 @@ public class StoryFragment extends Fragment {
         storyWebView.loadDataWithBaseURL(null,getTextHtml(story),
                 "text/html","utf-8", null);
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        if(storyId != null){
+            savedInstanceState.putString(STORY_ID, storyId);
+        }
     }
 
     public String getTextHtml(Story story){
