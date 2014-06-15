@@ -23,10 +23,9 @@ public class XMLParserTest {
 
     @Test
     public void testParseNewscast() throws IOException, XmlPullParserException {
-        String result = "NPR News: 06-14-2014 4PM ET";
         String url = "http://www.npr.org/rss/podcast.php?id=500005";
         String xmlStr = new HttpHelper().sendURLConnectionRequest(url);
         Newscast newscast = new XMLParser(context).parseNewscast(xmlStr);
-        Assert.assertEquals(result,newscast.getTitle());
+        Assert.assertNotNull(newscast.getTitle());
     }
 }
