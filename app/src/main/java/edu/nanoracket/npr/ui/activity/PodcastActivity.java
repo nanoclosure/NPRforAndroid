@@ -4,14 +4,13 @@ import android.support.v4.app.Fragment;
 
 import edu.nanoracket.npr.ui.fragment.PodcastFragment;
 
-public class PodcastActivity extends SingleFragmentActivity {
+public class PodcastActivity extends NprFragmentActivity {
 
 	@Override
 	protected Fragment createFragment() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String podcastUrl = (String)getIntent()
+        String podcastUrl = getIntent()
             .getStringExtra(PodcastFragment.PODCAST_URL);
-        String progName = getIntent().getStringExtra(PodcastFragment.PODCAST_PROGRAM);
-        return PodcastFragment.newInstance(podcastUrl, progName);
+        String programName = getIntent().getStringExtra(PodcastFragment.PODCAST_PROGRAM);
+        return PodcastFragment.newInstance(podcastUrl, programName);
     }
 }

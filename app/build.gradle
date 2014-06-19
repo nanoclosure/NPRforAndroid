@@ -107,6 +107,11 @@ dependencies {
     androidTestCompile 'com.squareup:fest-android:1.0.+'
 }
 
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include "**/*Test.class" // whatever Ant pattern matches your test class files
+}
+
 apply plugin: 'idea'
 
 idea {

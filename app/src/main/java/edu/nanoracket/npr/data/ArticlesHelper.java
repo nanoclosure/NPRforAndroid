@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ArticlesHelper extends SQLiteOpenHelper {
 
     static final int VERSION = 6;
-    static final String DB_FILE = "nprnews.db";
+    static final String DB_FILE = "nprNews.db";
     static final String TAB_ARTICLES = "articles";
     static final String COL_ID = "_id";
 

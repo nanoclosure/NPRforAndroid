@@ -40,7 +40,7 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
             "edu.nanoracket.npr.podcastListFragment.src";
     public static final String PODCAST_IMAGE = "imagePosition" ;
     public static final String PODCAST_PROGRAM = "program";
-    private static final String PROGRAM_NAME = "Pragram_Name";
+    private static final String PROGRAM_NAME = "programName";
 
     private ArrayList<Podcast> podcasts;
     private String programName;
@@ -84,8 +84,6 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
     @Override
     public void onStart(){
         super.onStart();
-        //podcasts = PodcastList.getInstance().getPodcastsList();
-        //setupAdapter();
         setController();
         if(!musicBound){
             if(playIntent == null){
@@ -139,6 +137,8 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
         savedInstanceState.putString(PROGRAM_NAME, programName);
     }
 
+    android.os.Handler handler = new android.os.Handler();
+
     private ServiceConnection musicConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -147,11 +147,16 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
             musicService.setList(podcasts);
             musicBound = true;
             if(musicService.isPlaying()){
-               controller.show(1000*60*2);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        controller.show(1000*60*2);
+                    }
+                });
             }
             musicService.setProgramUrl(getArguments().getString(PODCAST_SRC));
             musicService.setProgramName(getArguments().getString(PODCAST_PROGRAM));
-            musicService.setPorgramPosition(getArguments().getInt(PODCAST_IMAGE));
+            musicService.setProgramPosition(getArguments().getInt(PODCAST_IMAGE));
         }
 
         @Override
@@ -320,7 +325,6 @@ public class MusicListFragment extends ListFragment implements MediaPlayerContro
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_musiclistfragment, menu);
-        MenuItem item = menu.findItem(R.id.action_stop_service);
     }
 
     @Override

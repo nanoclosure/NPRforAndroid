@@ -7,10 +7,9 @@ public class CastUtils {
     private static final int TOTAL_PROGRESS = 100;
 	
 	public String milliSecondsToTimer(long milliseconds){
-		int hours = (int)( milliseconds / HOUR);
 		int minutes = (int)(milliseconds % HOUR) / MINUTE;
 		int seconds = (int) ((milliseconds % HOUR) % MINUTE / SECOND);
-        return String.format("%02d:02d:02d", hours, minutes, seconds);
+        return String.format("%02d:%02d", minutes, seconds);
 	}
 	
 	public int getProgressPercentage(long currentDuration, long totalDuration){

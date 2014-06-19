@@ -38,19 +38,20 @@ public class NewsListFragment extends Fragment implements
         LoadMoreNewsListView. OnLoadMoreListener, LoadMoreNewsListView.OnItemClickListener{
 
     public static final String TAG = "NewsListFragment";
-    public static final String NEWS_TOPIC_ID = "news_topic_id";
+    public static final String NEWS_TOPIC_ID = "newsTopicID";
     public static final String NEWS_TOPIC = "newsTopic";
+    public static final String NEWS_NEW_TITLE = "newsNewTitle";
     public static final String WIFI = "Wi-Fi";
     public static final String ANY = "Any";
 
     private static final String NUM_RESULTS = "10" ;
     private LoadMoreNewsListView loadMoreNewsListView;
-    private ArrayList<Story> mStories;
+    private ArrayList<Story> stories;
     private ProgressDialog progressDialog;
     private StoryLab storyLab;
     private StoryListAdapter adapter = null;
     private int startNum;
-    private static String newTopicId;
+    private String newsTopicID;
     private String networkPref;
     private boolean alarmPref;
 
@@ -79,8 +80,8 @@ public class NewsListFragment extends Fragment implements
         }
         progressDialog = ProgressDialog.show(getActivity(),"", "Loading Stories...");
         storyLab = StoryLab.getInstance(getActivity());
-        newTopicId = getArguments().getString(NEWS_TOPIC_ID);
-        new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
+        newsTopicID = getArguments().getString(NEWS_TOPIC_ID);
+        new LoadingStoriesTask().execute(newsTopicID, Integer.toString(startNum));
         startNum += Integer.parseInt(NUM_RESULTS);
         Log.i(TAG, "on created is called");
     }
@@ -96,7 +97,7 @@ public class NewsListFragment extends Fragment implements
     @Override
     public void onPause(){
         super.onPause();
-        if(newTopicId == "1001" && setServiceStatus()){
+        if(newsTopicID.equals("1001") && setServiceStatus()){
             SharedPreferences sharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(getActivity());
             String updateFrequency = sharedPreferences.getString("updatePref", "60");
@@ -117,10 +118,10 @@ public class NewsListFragment extends Fragment implements
     }
 
     public void setupAdapter(){
-        if(getActivity() == null || mStories == null ) return;
+        if(getActivity() == null || stories == null ) return;
 
-        if(mStories != null){
-            adapter = new StoryListAdapter(getActivity(), mStories);
+        if(stories != null){
+            adapter = new StoryListAdapter(getActivity(), stories);
             loadMoreNewsListView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         } else {
@@ -132,7 +133,7 @@ public class NewsListFragment extends Fragment implements
 
     @Override
     public void onLoadMore() {
-        new LoadingStoriesTask().execute(newTopicId, Integer.toString(startNum));
+        new LoadingStoriesTask().execute(newsTopicID, Integer.toString(startNum));
         startNum += Integer.parseInt(NUM_RESULTS);
     }
 
@@ -188,14 +189,19 @@ public class NewsListFragment extends Fragment implements
 
         @Override
         protected void onPostExecute(StoryLab storyLab){
-            mStories = StoryLab.getInstance(getActivity()).getStoryList();
+            stories = StoryLab.getInstance(getActivity()).getStoryList();
+            if(newsTopicID.equals("1001") && stories != null ){
+                PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .edit()
+                        .putString(NEWS_NEW_TITLE, stories.get(0).getTitle())
+                        .commit();
+            }
             if(adapter == null){
                 setupAdapter();
-            } else if(adapter != null) {
+            } else {
                 adapter.notifyDataSetChanged();
                 loadMoreNewsListView.onLoadMoreComplete();
             }
-            //loadMoreNewsListView.onLoadMoreComplete();
             super.onPostExecute(storyLab);
         }
     }

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -42,9 +43,11 @@ public class StoryFragment extends Fragment {
 
     public static final String TAG = "StoryFragment";
     public static final String STORY_ID = "story_id";
+    public static final String SCROLL_POSITION = "scroll_position";
 
     private ShareActionProvider actionProvider;
     private TextView storyTitleTextView, storyBylineTextView, storyDateTextView;
+    private ScrollView scrollView;
     private ImageView storyImageView;
     private WebView storyWebView;
     private Story story;
@@ -70,6 +73,16 @@ public class StoryFragment extends Fragment {
             storyId = savedInstanceState.getString(STORY_ID);
         }
 
+        if(savedInstanceState != null && savedInstanceState.getIntArray(SCROLL_POSITION)!= null){
+            final int[] positions = savedInstanceState.getIntArray(SCROLL_POSITION);
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.scrollTo(positions[0], positions[1]);
+                }
+            });
+        }
+
         Log.i(TAG, "Story id is " + storyId);
         story = StoryLab.getInstance(getActivity()).getStory(storyId);
         Log.i(TAG, "Story id is " + story.getId());
@@ -85,6 +98,7 @@ public class StoryFragment extends Fragment {
         storyDateTextView = (TextView)view.findViewById(R.id.storyDate);
         storyImageView = (ImageView)view.findViewById(R.id.storyImage);
         storyWebView = (WebView)view.findViewById(R.id.storyWebView);
+        scrollView = (ScrollView)view.findViewById(R.id.storyScrollView);
 
         storyTitleTextView.setText(story.getTitle());
         storyBylineTextView.setText("By " + story.getByline().getName());
@@ -100,10 +114,17 @@ public class StoryFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         if(storyId != null){
             savedInstanceState.putString(STORY_ID, storyId);
+        }
+
+        if(scrollView != null){
+            savedInstanceState.putIntArray(SCROLL_POSITION,
+                    new int[]{scrollView.getScrollX(), scrollView.getScrollY()});
+            Log.i(TAG, "The scrollView is :" + scrollView.getScrollY());
         }
     }
 

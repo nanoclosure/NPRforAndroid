@@ -165,7 +165,6 @@ public class Story {
         private final String src;
         @SuppressWarnings("unused")
         private final String hasBorder;
-        //private final String caption;
 
         public Image(String id, String type, String width, String src, String hasBorder) {
             this.id = id;
@@ -173,16 +172,11 @@ public class Story {
             this.width = width;
             this.src = src;
             this.hasBorder = hasBorder;
-            //this.caption = caption;
         }
 
         public String getSrc() {
             return src;
         }
-
-        /*public String getCaption() {
-            return caption;
-        }*/
 
         public String getType() {
             return type;

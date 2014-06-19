@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import edu.nanoracket.npr.BuildConfig;
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.model.Podcast;
 import edu.nanoracket.npr.util.StringUtils;
@@ -119,13 +120,6 @@ public class MusicService extends Service implements
         return START_STICKY;
     }
 
-    public void genPlayPauseIntent(String action){
-        Intent playPauseIntent = new Intent(action);
-        PendingIntent pendPlayPauseIntent = PendingIntent.getBroadcast(this, 0,
-                                           playPauseIntent, PendingIntent.FLAG_ONE_SHOT);
-        notificationViews.setOnClickPendingIntent(R.id.noti_pause, pendPlayPauseIntent);
-    }
-
     @Override
     public IBinder onBind(Intent intent) {
         return musicBind;
@@ -172,7 +166,9 @@ public class MusicService extends Service implements
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int i, int i2) {
-        Log.v(TAG, "Playback error.");
+        if(BuildConfig.DEBUG){
+            Log.v(TAG, "Playback error.");
+        }
         mediaPlayer.reset();
         return false;
     }
@@ -180,22 +176,6 @@ public class MusicService extends Service implements
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        //mediaPlayer.pause();
-        /*Intent notifiIntent = new Intent(this, PodcastListActivity.class);
-        notifiIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendInt = PendingIntent.getActivity(this, 0,
-                notifiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-
-        builder.setContentIntent(pendInt)
-                .setSmallIcon(R.drawable.play_button_pressed)
-                .setTicker(podcastTitle)
-                .setOngoing(true)
-                .setContentTitle("Playing")
-                .setContentText(podcastTitle);
-
-        Notification npr_noti;*/
         notification = generateNonfiction();
         notification.flags = Notification.FLAG_NO_CLEAR;
         startForeground(NOTIFY_ID, notification);
@@ -285,7 +265,7 @@ public class MusicService extends Service implements
         programName = name;
     }
 
-    public void setPorgramPosition(int position){
+    public void setProgramPosition(int position){
         programPosition = position;
     }
 

@@ -30,12 +30,11 @@ public class ProgramListFragment extends ListFragment {
     private static final String FILENAME = "programs.json";
     public static final String ID = "ProgramListFragment.ID";
 
-    public ArrayList<Program> mPrograms = new ArrayList<Program>();
-    private String mJSONString;
+    public ArrayList<Program> programs = new ArrayList<Program>();
     public ProgramListAdapter listAdapter;
     public ListView listView;
 
-    public static final int[] imagePositions = new int[] {
+    public final int[] imagePositions = new int[] {
             R.drawable.all_things_considered,
             R.drawable.cartalk,
             R.drawable.tedradiohour,
@@ -63,7 +62,7 @@ public class ProgramListFragment extends ListFragment {
         setHasOptionsMenu(true);
         setRetainInstance(true);
         try {
-            mPrograms = new JSONSerializer(getActivity().getApplicationContext(),FILENAME)
+            programs = new JSONSerializer(getActivity().getApplicationContext(),FILENAME)
                             .loadPrograms();
         } catch (IOException e) {
             Log.e(TAG, "failed to open the file");
@@ -85,11 +84,11 @@ public class ProgramListFragment extends ListFragment {
     @Override
     public void onPause(){
         super.onPause();
-        if(mPrograms.size() > 0){
-            Log.i(TAG, "the size of programs is " + mPrograms.size());
+        if(programs.size() > 0){
+            Log.i(TAG, "the size of programs is " + programs.size());
             try {
                 new JSONSerializer(getActivity().getApplicationContext(),FILENAME)
-                        .savePrograms(mPrograms);
+                        .savePrograms(programs);
             } catch (JSONException e) {
                 Log.e(TAG, "failed to convert to JSONObject");
             } catch (IOException e) {
@@ -105,7 +104,7 @@ public class ProgramListFragment extends ListFragment {
         protected ArrayList<Program> doInBackground(String... params){
             Activity activity = getActivity();
             ArrayList<Program> programs = new ArrayList<Program>();
-            String jsonStr = null;
+            String jsonStr;
             if(activity == null)
                 return programs;
             try {
@@ -122,8 +121,8 @@ public class ProgramListFragment extends ListFragment {
 
         @Override
         protected void onPostExecute(ArrayList<Program> programs){
-            mPrograms = programs;
-            Log.i(TAG,"Program List Received: " + mPrograms);
+            ProgramListFragment.this.programs = programs;
+            Log.i(TAG,"Program List Received: " + ProgramListFragment.this.programs);
             setupAdapter();
         }
     }
@@ -132,8 +131,8 @@ public class ProgramListFragment extends ListFragment {
         if(getActivity() == null  || getListView() == null) return;
 
         listView = getListView();
-        listAdapter = new ProgramListAdapter(getActivity(),mPrograms, imagePositions);
-        if(mPrograms != null){
+        listAdapter = new ProgramListAdapter(getActivity(), programs, imagePositions);
+        if(programs != null){
             setListAdapter(listAdapter);
         } else {
             setListAdapter(null);
@@ -142,7 +141,7 @@ public class ProgramListFragment extends ListFragment {
      
      @Override
  	 public void onListItemClick(ListView l, View v, int position, long id) {
- 		 Program program = (Program)mPrograms.get(position);
+ 		 Program program = programs.get(position);
          Log.i(TAG,"News selected: " + program);
          Intent i = new Intent(getActivity(), PodcastListActivity.class);
          i.putExtra(PodcastListFragment.PODCAST_SRC, program.getSource());

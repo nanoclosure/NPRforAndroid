@@ -1,19 +1,11 @@
 package edu.nanoracket.npr.ui.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import edu.nanoracket.npr.music.MusicListFragment;
 import edu.nanoracket.npr.ui.fragment.PodcastListFragment;
 
-public class PodcastListActivity extends SingleFragmentActivity {
-
-	@Override
-	public void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
-		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		//setHasOptionsMenu(true);
-	}
+public class PodcastListActivity extends NprFragmentActivity {
 
 	@Override
 	protected Fragment createFragment() {

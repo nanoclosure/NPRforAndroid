@@ -3,19 +3,16 @@ package edu.nanoracket.npr.home;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 
 import edu.nanoracket.npr.R;
 import edu.nanoracket.npr.lab.StoryLab;
-import edu.nanoracket.npr.service.NewsUpdateService;
 import edu.nanoracket.npr.ui.fragment.AboutFragment;
 import edu.nanoracket.npr.ui.fragment.ArticlesListFragment;
 import edu.nanoracket.npr.ui.fragment.NetworkDialogFragment;
@@ -29,15 +26,11 @@ import edu.nanoracket.npr.ui.navdrawer.NavDrawerAdapter;
 import edu.nanoracket.npr.ui.navdrawer.NavMenuItem;
 
 public class YourAppMainActivity extends AbstractNavDrawerActivity {
-
-    public static final String WIFI = "Wi-Fi";
-    public static final String ANY = "Any";
     private static final String TAG = "YourAppMainActivity" ;
 
     private StoryLab storyLab;
     private String newsTopicId, newsTopic;
     private int proListFragmentID;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

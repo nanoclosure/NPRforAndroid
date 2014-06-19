@@ -34,7 +34,7 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
 
     private ImageView mNewscastImageView;
     private TextView mTitleTextView,mDurationTextView, mCurrentTextView;
-    static Newscast mNewscast;
+    private Newscast mNewscast;
     private ImageButton mPlayPauseButton,mForwardButton,mReverseButton,mReverse30Button;
     private SeekBar mProgressBar;
 
@@ -191,9 +191,9 @@ public class NewscastFragment extends Fragment implements SeekBar.OnSeekBarChang
         public void run() {
             long totalDuration = mMediaPlayer.getDuration();
             long currentDuration = mMediaPlayer.getCurrentPosition();
-            mDurationTextView.setText(""+utils.milliSecondsToTimer(totalDuration));
+            mDurationTextView.setText("" + utils.milliSecondsToTimer(totalDuration));
             mCurrentTextView.setText("" + utils.milliSecondsToTimer(currentDuration));
-            int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
+            int progress = utils.getProgressPercentage(currentDuration, totalDuration);
             mProgressBar.setProgress(progress);
             mHandler.postDelayed(this, 100);
         }
